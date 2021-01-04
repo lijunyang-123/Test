@@ -9,6 +9,10 @@ namespace 仓储后台管理系统.Controllers
     public class XMLController : Controller
     {
         // GET: XML
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             return View();
