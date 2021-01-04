@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b3acd939de904f63b79c9474f91c7e4c" Name="Diagram1">
+        <EntityTypeShape EntityType="CKSJKModel.Company" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CKSJKModel.customer" Width="1.5" PointX="0.75" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CKSJKModel.customerAddressInfo" Width="1.5" PointX="3" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CKSJKModel.department" Width="1.5" PointX="0.75" PointY="18.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CKSJKModel.Location" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CKSJKModel.LossReport" Width="1.5" PointX="5.25" PointY="19.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CKSJKModel.LossReportDetails" Width="1.5" PointX="5.25" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CKSJKModel.LossReportType" Width="1.5" PointX="3" PointY="24.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CKSJKModel.OutboundType" Width="1.5" PointX="3" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CKSJKModel.outWareDetail" Width="1.5" PointX="5.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CKSJKModel.outWarehourse" Width="1.5" PointX="5.25" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CKSJKModel.position" Width="1.5" PointX="0.75" PointY="21.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CKSJKModel.product" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CKSJKModel.productLeix" Width="1.5" PointX="0.75" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CKSJKModel.putWareDetail" Width="1.5" PointX="8.25" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CKSJKModel.putWarehourse" Width="1.5" PointX="8.25" PointY="19.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CKSJKModel.receiptType" Width="1.5" PointX="6" PointY="16.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CKSJKModel.Staff" Width="1.5" PointX="3" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CKSJKModel.supplier" Width="1.5" PointX="6" PointY="27.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CKSJKModel.supplierLeix" Width="1.5" PointX="3.75" PointY="28.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CKSJKModel.sysdiagrams" Width="1.5" PointX="7.75" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CKSJKModel.transfer" Width="1.5" PointX="5.25" PointY="23.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CKSJKModel.transferDetail" Width="1.5" PointX="8.25" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CKSJKModel.transferType" Width="1.5" PointX="3" PointY="31.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CKSJKModel.warehourse" Width="1.5" PointX="1.5" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="CKSJKModel.产品表关联单位表" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.产品表关联客户表" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.出库单关联客户" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.客户地址明细关联客户" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.出库单关联客户地址" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.员工表关联部门表" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.报损单明细关联库位" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.产品表关联库位表" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.出库单明细关联库位" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.库位表关联仓库表" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.入库单明细关联库位" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.移库单明细当前关联库位" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.移库单明细移入关联库位" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.报损单关联报损单类型" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.报损单关联员工" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.报损单明细关联产品" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.出库单关联出库单类型" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.出库单明细关联产品" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.出库单关联员工" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.FK_position_position" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.员工表关联职位表" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.产品表关联类别表" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.入库单明细关联产品" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.移库单明细关联产品" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.入库单关联供应商" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.入库单关联入库单类型" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.入库单关联员工" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.移库单关联员工" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.供应商关联供应商类型" ManuallyRouted="false" />
+        <AssociationConnector Association="CKSJKModel.移库单关联移库单类型" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

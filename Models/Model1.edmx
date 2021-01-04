@@ -1,0 +1,1995 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CKSJKModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="CompanyNum" />
+          </Key>
+          <Property Name="CompanyNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CompanyName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="isDel" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="customerNum" />
+          </Key>
+          <Property Name="customerNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="customerName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="phone" Type="varchar" MaxLength="50" />
+          <Property Name="chuanzhen" Type="varchar" MaxLength="50" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="contents" Type="varchar" MaxLength="50" />
+          <Property Name="createTime" Type="datetime" Nullable="false" />
+          <Property Name="isDel" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="customerAddressInfo">
+          <Key>
+            <PropertyRef Name="AddressNum" />
+          </Key>
+          <Property Name="AddressNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddressXinxi" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="customerNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="contacts" Type="varchar" MaxLength="50" />
+          <Property Name="phone" Type="varchar" MaxLength="50" />
+          <Property Name="isDel" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="department">
+          <Key>
+            <PropertyRef Name="BmNum" />
+          </Key>
+          <Property Name="BmNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="BmName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="createTime" Type="datetime" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="50" />
+          <Property Name="isDel" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="LocationNum" />
+          </Key>
+          <Property Name="LocationNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LocationName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="warehourseNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="barcode" Type="varchar" MaxLength="50" />
+          <Property Name="isDisable" Type="int" Nullable="false" />
+          <Property Name="isDefult" Type="int" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="isDel" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LossReport">
+          <Key>
+            <PropertyRef Name="LossReportNum" />
+          </Key>
+          <Property Name="LossReportNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LossReportTypeNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="orderNo" Type="varchar" MaxLength="50" />
+          <Property Name="ygNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="createTime" Type="datetime" Nullable="false" />
+          <Property Name="totalNum" Type="bigint" Nullable="false" />
+          <Property Name="OperationMode" Type="varchar" MaxLength="50" />
+          <Property Name="examineState" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="contents" Type="varchar" MaxLength="50" />
+          <Property Name="isDel" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LossReportDetails">
+          <Key>
+            <PropertyRef Name="LossReportNum" />
+            <PropertyRef Name="LocationNum" />
+          </Key>
+          <Property Name="LossReportNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LocationNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="productNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="productCount" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LossReportType">
+          <Key>
+            <PropertyRef Name="LossReportTypeNum" />
+          </Key>
+          <Property Name="LossReportTypeNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LossReportTypeName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OutboundType">
+          <Key>
+            <PropertyRef Name="OutboundTypeNum" />
+          </Key>
+          <Property Name="OutboundTypeNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="OutboundTypeName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="outWareDetail">
+          <Key>
+            <PropertyRef Name="OutboundNum" />
+            <PropertyRef Name="productNum" />
+          </Key>
+          <Property Name="OutboundNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="productNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="productCount" Type="bigint" Nullable="false" />
+          <Property Name="totalMoney" Type="float" Nullable="false" />
+          <Property Name="LocationNum" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="outWarehourse">
+          <Key>
+            <PropertyRef Name="OutboundNum" />
+          </Key>
+          <Property Name="OutboundNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="OutboundTypeNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="orderNo" Type="varchar" MaxLength="50" />
+          <Property Name="IssuanceDate" Type="datetime" Nullable="false" />
+          <Property Name="customerNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AddressNum" Type="varchar" MaxLength="50" />
+          <Property Name="ygNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="createTime" Type="datetime" Nullable="false" />
+          <Property Name="totalNum" Type="bigint" Nullable="false" />
+          <Property Name="totalAmount" Type="float" Nullable="false" />
+          <Property Name="examineState" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="OperationMode" Type="varchar" MaxLength="50" />
+          <Property Name="isDel" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="position">
+          <Key>
+            <PropertyRef Name="ZwNum" />
+          </Key>
+          <Property Name="ZwNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ZwName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="title" Type="varchar" MaxLength="50" />
+          <Property Name="isDel" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="productNum" />
+          </Key>
+          <Property Name="productNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Probarcode" Type="varchar" MaxLength="50" />
+          <Property Name="productName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="productCount" Type="bigint" Nullable="false" />
+          <Property Name="price" Type="float" Nullable="false" />
+          <Property Name="Specifications" Type="varchar" MaxLength="50" />
+          <Property Name="productLeixNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CompanyNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="contents" Type="varchar" MaxLength="50" />
+          <Property Name="LocationNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="customerNum" Type="varchar" MaxLength="50" />
+          <Property Name="isDel" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="productLeix">
+          <Key>
+            <PropertyRef Name="productLeixNum" />
+          </Key>
+          <Property Name="productLeixNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="productLeixName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Founder" Type="varchar" MaxLength="50" />
+          <Property Name="createTime" Type="datetime" Nullable="false" />
+          <Property Name="contents" Type="varchar" MaxLength="50" />
+          <Property Name="isDel" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="putWareDetail">
+          <Key>
+            <PropertyRef Name="receiptNum" />
+            <PropertyRef Name="productNum" />
+          </Key>
+          <Property Name="receiptNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="productNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="productCount" Type="bigint" Nullable="false" />
+          <Property Name="totalMoney" Type="float" Nullable="false" />
+          <Property Name="LocationNum" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="putWarehourse">
+          <Key>
+            <PropertyRef Name="receiptNum" />
+          </Key>
+          <Property Name="receiptNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="receiptTypeNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="orderNo" Type="varchar" MaxLength="50" />
+          <Property Name="ygNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="supplierNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="createTime" Type="datetime" Nullable="false" />
+          <Property Name="totalNum" Type="bigint" Nullable="false" />
+          <Property Name="examineState" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="OperationMode" Type="varchar" MaxLength="50" />
+          <Property Name="totalAmount" Type="float" Nullable="false" />
+          <Property Name="contents" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="isDel" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="receiptType">
+          <Key>
+            <PropertyRef Name="receiptTypeNum" />
+          </Key>
+          <Property Name="receiptTypeNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="receiptTypeName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="ygNumber" />
+          </Key>
+          <Property Name="ygNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LoginName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="loginPwd" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ygName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="phone" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="LoginNum" Type="int" Nullable="false" />
+          <Property Name="BmNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ZwNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="EndTime" Type="datetime" />
+          <Property Name="isDel" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="supplier">
+          <Key>
+            <PropertyRef Name="supplierNum" />
+          </Key>
+          <Property Name="supplierNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="supplierLeix" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="supplierName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="phone" Type="varchar" MaxLength="50" />
+          <Property Name="chuanzhen" Type="varchar" MaxLength="50" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="contacts" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="address" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="contents" Type="varchar" MaxLength="50" />
+          <Property Name="isDel" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="supplierLeix">
+          <Key>
+            <PropertyRef Name="supplierLeixNum" />
+          </Key>
+          <Property Name="supplierLeixNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="supplierLeixName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="transfer">
+          <Key>
+            <PropertyRef Name="transferNum" />
+          </Key>
+          <Property Name="transferNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="transferTypeNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="orderNo" Type="varchar" MaxLength="50" />
+          <Property Name="totalNum" Type="bigint" Nullable="false" />
+          <Property Name="ygNumber" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="createTime" Type="datetime" Nullable="false" />
+          <Property Name="OperationMode" Type="varchar" MaxLength="50" />
+          <Property Name="examineState" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="contents" Type="varchar" MaxLength="50" />
+          <Property Name="isDel" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="transferDetail">
+          <Key>
+            <PropertyRef Name="transferNum" />
+            <PropertyRef Name="productNum" />
+          </Key>
+          <Property Name="transferNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="productNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="productCount" Type="bigint" Nullable="false" />
+          <Property Name="FrontLocationNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EndLocationNum" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="transferType">
+          <Key>
+            <PropertyRef Name="transferTypeNum" />
+          </Key>
+          <Property Name="transferTypeNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="transferTypeName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="warehourse">
+          <Key>
+            <PropertyRef Name="warehourseNum" />
+          </Key>
+          <Property Name="warehourseNum" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="warehourseName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="warecode" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_position_position">
+          <End Role="position" Type="Self.position" Multiplicity="1" />
+          <End Role="position1" Type="Self.position" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="position">
+              <PropertyRef Name="ZwNum" />
+            </Principal>
+            <Dependent Role="position1">
+              <PropertyRef Name="ZwNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="报损单关联报损单类型">
+          <End Role="LossReportType" Type="Self.LossReportType" Multiplicity="1" />
+          <End Role="LossReport" Type="Self.LossReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LossReportType">
+              <PropertyRef Name="LossReportTypeNum" />
+            </Principal>
+            <Dependent Role="LossReport">
+              <PropertyRef Name="LossReportTypeNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="报损单关联员工">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="LossReport" Type="Self.LossReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="ygNumber" />
+            </Principal>
+            <Dependent Role="LossReport">
+              <PropertyRef Name="ygNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="报损单明细关联产品">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="LossReportDetails" Type="Self.LossReportDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="productNum" />
+            </Principal>
+            <Dependent Role="LossReportDetails">
+              <PropertyRef Name="productNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="报损单明细关联库位">
+          <End Role="Location" Type="Self.Location" Multiplicity="1" />
+          <End Role="LossReportDetails" Type="Self.LossReportDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationNum" />
+            </Principal>
+            <Dependent Role="LossReportDetails">
+              <PropertyRef Name="LocationNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="产品表关联单位表">
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyNum" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="CompanyNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="产品表关联客户表">
+          <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="customerNum" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="customerNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="产品表关联库位表">
+          <End Role="Location" Type="Self.Location" Multiplicity="1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationNum" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="LocationNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="产品表关联类别表">
+          <End Role="productLeix" Type="Self.productLeix" Multiplicity="1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productLeix">
+              <PropertyRef Name="productLeixNum" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="productLeixNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="出库单关联出库单类型">
+          <End Role="OutboundType" Type="Self.OutboundType" Multiplicity="1" />
+          <End Role="outWarehourse" Type="Self.outWarehourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OutboundType">
+              <PropertyRef Name="OutboundTypeNum" />
+            </Principal>
+            <Dependent Role="outWarehourse">
+              <PropertyRef Name="OutboundTypeNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="出库单关联客户">
+          <End Role="customer" Type="Self.customer" Multiplicity="1" />
+          <End Role="outWarehourse" Type="Self.outWarehourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="customerNum" />
+            </Principal>
+            <Dependent Role="outWarehourse">
+              <PropertyRef Name="customerNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="出库单关联客户地址">
+          <End Role="customerAddressInfo" Type="Self.customerAddressInfo" Multiplicity="0..1" />
+          <End Role="outWarehourse" Type="Self.outWarehourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customerAddressInfo">
+              <PropertyRef Name="AddressNum" />
+            </Principal>
+            <Dependent Role="outWarehourse">
+              <PropertyRef Name="AddressNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="出库单关联员工">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="outWarehourse" Type="Self.outWarehourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="ygNumber" />
+            </Principal>
+            <Dependent Role="outWarehourse">
+              <PropertyRef Name="ygNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="出库单明细关联产品">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="outWareDetail" Type="Self.outWareDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="productNum" />
+            </Principal>
+            <Dependent Role="outWareDetail">
+              <PropertyRef Name="productNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="出库单明细关联库位">
+          <End Role="Location" Type="Self.Location" Multiplicity="1" />
+          <End Role="outWareDetail" Type="Self.outWareDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationNum" />
+            </Principal>
+            <Dependent Role="outWareDetail">
+              <PropertyRef Name="LocationNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="供应商关联供应商类型">
+          <End Role="supplierLeix" Type="Self.supplierLeix" Multiplicity="1" />
+          <End Role="supplier" Type="Self.supplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="supplierLeix">
+              <PropertyRef Name="supplierLeixNum" />
+            </Principal>
+            <Dependent Role="supplier">
+              <PropertyRef Name="supplierLeix" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="客户地址明细关联客户">
+          <End Role="customer" Type="Self.customer" Multiplicity="1" />
+          <End Role="customerAddressInfo" Type="Self.customerAddressInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="customerNum" />
+            </Principal>
+            <Dependent Role="customerAddressInfo">
+              <PropertyRef Name="customerNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="库位表关联仓库表">
+          <End Role="warehourse" Type="Self.warehourse" Multiplicity="1" />
+          <End Role="Location" Type="Self.Location" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="warehourse">
+              <PropertyRef Name="warehourseNum" />
+            </Principal>
+            <Dependent Role="Location">
+              <PropertyRef Name="warehourseNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="入库单关联供应商">
+          <End Role="supplier" Type="Self.supplier" Multiplicity="1" />
+          <End Role="putWarehourse" Type="Self.putWarehourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="supplier">
+              <PropertyRef Name="supplierNum" />
+            </Principal>
+            <Dependent Role="putWarehourse">
+              <PropertyRef Name="supplierNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="入库单关联入库单类型">
+          <End Role="receiptType" Type="Self.receiptType" Multiplicity="1" />
+          <End Role="putWarehourse" Type="Self.putWarehourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="receiptType">
+              <PropertyRef Name="receiptTypeNum" />
+            </Principal>
+            <Dependent Role="putWarehourse">
+              <PropertyRef Name="receiptTypeNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="入库单关联员工">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="putWarehourse" Type="Self.putWarehourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="ygNumber" />
+            </Principal>
+            <Dependent Role="putWarehourse">
+              <PropertyRef Name="ygNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="入库单明细关联产品">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="putWareDetail" Type="Self.putWareDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="productNum" />
+            </Principal>
+            <Dependent Role="putWareDetail">
+              <PropertyRef Name="productNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="入库单明细关联库位">
+          <End Role="Location" Type="Self.Location" Multiplicity="1" />
+          <End Role="putWareDetail" Type="Self.putWareDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationNum" />
+            </Principal>
+            <Dependent Role="putWareDetail">
+              <PropertyRef Name="LocationNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="移库单关联移库单类型">
+          <End Role="transferType" Type="Self.transferType" Multiplicity="1" />
+          <End Role="transfer" Type="Self.transfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="transferType">
+              <PropertyRef Name="transferTypeNum" />
+            </Principal>
+            <Dependent Role="transfer">
+              <PropertyRef Name="transferTypeNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="移库单关联员工">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="transfer" Type="Self.transfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="ygNumber" />
+            </Principal>
+            <Dependent Role="transfer">
+              <PropertyRef Name="ygNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="移库单明细当前关联库位">
+          <End Role="Location" Type="Self.Location" Multiplicity="1" />
+          <End Role="transferDetail" Type="Self.transferDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationNum" />
+            </Principal>
+            <Dependent Role="transferDetail">
+              <PropertyRef Name="FrontLocationNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="移库单明细关联产品">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="transferDetail" Type="Self.transferDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="productNum" />
+            </Principal>
+            <Dependent Role="transferDetail">
+              <PropertyRef Name="productNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="移库单明细移入关联库位">
+          <End Role="Location" Type="Self.Location" Multiplicity="1" />
+          <End Role="transferDetail" Type="Self.transferDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationNum" />
+            </Principal>
+            <Dependent Role="transferDetail">
+              <PropertyRef Name="EndLocationNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="员工表关联部门表">
+          <End Role="department" Type="Self.department" Multiplicity="1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="department">
+              <PropertyRef Name="BmNum" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="BmNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="员工表关联职位表">
+          <End Role="position" Type="Self.position" Multiplicity="1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="position">
+              <PropertyRef Name="ZwNum" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="ZwNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CKSJKModelStoreContainer">
+          <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="customer" EntityType="Self.customer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="customerAddressInfo" EntityType="Self.customerAddressInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="department" EntityType="Self.department" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Location" EntityType="Self.Location" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LossReport" EntityType="Self.LossReport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LossReportDetails" EntityType="Self.LossReportDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LossReportType" EntityType="Self.LossReportType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OutboundType" EntityType="Self.OutboundType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="outWareDetail" EntityType="Self.outWareDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="outWarehourse" EntityType="Self.outWarehourse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="position" EntityType="Self.position" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="product" EntityType="Self.product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="productLeix" EntityType="Self.productLeix" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="putWareDetail" EntityType="Self.putWareDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="putWarehourse" EntityType="Self.putWarehourse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="receiptType" EntityType="Self.receiptType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="supplier" EntityType="Self.supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="supplierLeix" EntityType="Self.supplierLeix" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="transfer" EntityType="Self.transfer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="transferDetail" EntityType="Self.transferDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="transferType" EntityType="Self.transferType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="warehourse" EntityType="Self.warehourse" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_position_position" Association="Self.FK_position_position">
+            <End Role="position" EntitySet="position" />
+            <End Role="position1" EntitySet="position" />
+          </AssociationSet>
+          <AssociationSet Name="报损单关联报损单类型" Association="Self.报损单关联报损单类型">
+            <End Role="LossReportType" EntitySet="LossReportType" />
+            <End Role="LossReport" EntitySet="LossReport" />
+          </AssociationSet>
+          <AssociationSet Name="报损单关联员工" Association="Self.报损单关联员工">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="LossReport" EntitySet="LossReport" />
+          </AssociationSet>
+          <AssociationSet Name="报损单明细关联产品" Association="Self.报损单明细关联产品">
+            <End Role="product" EntitySet="product" />
+            <End Role="LossReportDetails" EntitySet="LossReportDetails" />
+          </AssociationSet>
+          <AssociationSet Name="报损单明细关联库位" Association="Self.报损单明细关联库位">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="LossReportDetails" EntitySet="LossReportDetails" />
+          </AssociationSet>
+          <AssociationSet Name="产品表关联单位表" Association="Self.产品表关联单位表">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="产品表关联客户表" Association="Self.产品表关联客户表">
+            <End Role="customer" EntitySet="customer" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="产品表关联库位表" Association="Self.产品表关联库位表">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="产品表关联类别表" Association="Self.产品表关联类别表">
+            <End Role="productLeix" EntitySet="productLeix" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="出库单关联出库单类型" Association="Self.出库单关联出库单类型">
+            <End Role="OutboundType" EntitySet="OutboundType" />
+            <End Role="outWarehourse" EntitySet="outWarehourse" />
+          </AssociationSet>
+          <AssociationSet Name="出库单关联客户" Association="Self.出库单关联客户">
+            <End Role="customer" EntitySet="customer" />
+            <End Role="outWarehourse" EntitySet="outWarehourse" />
+          </AssociationSet>
+          <AssociationSet Name="出库单关联客户地址" Association="Self.出库单关联客户地址">
+            <End Role="customerAddressInfo" EntitySet="customerAddressInfo" />
+            <End Role="outWarehourse" EntitySet="outWarehourse" />
+          </AssociationSet>
+          <AssociationSet Name="出库单关联员工" Association="Self.出库单关联员工">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="outWarehourse" EntitySet="outWarehourse" />
+          </AssociationSet>
+          <AssociationSet Name="出库单明细关联产品" Association="Self.出库单明细关联产品">
+            <End Role="product" EntitySet="product" />
+            <End Role="outWareDetail" EntitySet="outWareDetail" />
+          </AssociationSet>
+          <AssociationSet Name="出库单明细关联库位" Association="Self.出库单明细关联库位">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="outWareDetail" EntitySet="outWareDetail" />
+          </AssociationSet>
+          <AssociationSet Name="供应商关联供应商类型" Association="Self.供应商关联供应商类型">
+            <End Role="supplierLeix" EntitySet="supplierLeix" />
+            <End Role="supplier" EntitySet="supplier" />
+          </AssociationSet>
+          <AssociationSet Name="客户地址明细关联客户" Association="Self.客户地址明细关联客户">
+            <End Role="customer" EntitySet="customer" />
+            <End Role="customerAddressInfo" EntitySet="customerAddressInfo" />
+          </AssociationSet>
+          <AssociationSet Name="库位表关联仓库表" Association="Self.库位表关联仓库表">
+            <End Role="warehourse" EntitySet="warehourse" />
+            <End Role="Location" EntitySet="Location" />
+          </AssociationSet>
+          <AssociationSet Name="入库单关联供应商" Association="Self.入库单关联供应商">
+            <End Role="supplier" EntitySet="supplier" />
+            <End Role="putWarehourse" EntitySet="putWarehourse" />
+          </AssociationSet>
+          <AssociationSet Name="入库单关联入库单类型" Association="Self.入库单关联入库单类型">
+            <End Role="receiptType" EntitySet="receiptType" />
+            <End Role="putWarehourse" EntitySet="putWarehourse" />
+          </AssociationSet>
+          <AssociationSet Name="入库单关联员工" Association="Self.入库单关联员工">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="putWarehourse" EntitySet="putWarehourse" />
+          </AssociationSet>
+          <AssociationSet Name="入库单明细关联产品" Association="Self.入库单明细关联产品">
+            <End Role="product" EntitySet="product" />
+            <End Role="putWareDetail" EntitySet="putWareDetail" />
+          </AssociationSet>
+          <AssociationSet Name="入库单明细关联库位" Association="Self.入库单明细关联库位">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="putWareDetail" EntitySet="putWareDetail" />
+          </AssociationSet>
+          <AssociationSet Name="移库单关联移库单类型" Association="Self.移库单关联移库单类型">
+            <End Role="transferType" EntitySet="transferType" />
+            <End Role="transfer" EntitySet="transfer" />
+          </AssociationSet>
+          <AssociationSet Name="移库单关联员工" Association="Self.移库单关联员工">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="transfer" EntitySet="transfer" />
+          </AssociationSet>
+          <AssociationSet Name="移库单明细当前关联库位" Association="Self.移库单明细当前关联库位">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="transferDetail" EntitySet="transferDetail" />
+          </AssociationSet>
+          <AssociationSet Name="移库单明细关联产品" Association="Self.移库单明细关联产品">
+            <End Role="product" EntitySet="product" />
+            <End Role="transferDetail" EntitySet="transferDetail" />
+          </AssociationSet>
+          <AssociationSet Name="移库单明细移入关联库位" Association="Self.移库单明细移入关联库位">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="transferDetail" EntitySet="transferDetail" />
+          </AssociationSet>
+          <AssociationSet Name="员工表关联部门表" Association="Self.员工表关联部门表">
+            <End Role="department" EntitySet="department" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="员工表关联职位表" Association="Self.员工表关联职位表">
+            <End Role="position" EntitySet="position" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CKSJKModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="CompanyNum" />
+          </Key>
+          <Property Name="CompanyNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="isDel" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="product" Relationship="Self.产品表关联单位表" FromRole="Company" ToRole="product" />
+        </EntityType>
+        <EntityType Name="customer">
+          <Key>
+            <PropertyRef Name="customerNum" />
+          </Key>
+          <Property Name="customerNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="customerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="chuanzhen" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="contents" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="createTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="isDel" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="product" Relationship="Self.产品表关联客户表" FromRole="customer" ToRole="product" />
+          <NavigationProperty Name="outWarehourse" Relationship="Self.出库单关联客户" FromRole="customer" ToRole="outWarehourse" />
+          <NavigationProperty Name="customerAddressInfo" Relationship="Self.客户地址明细关联客户" FromRole="customer" ToRole="customerAddressInfo" />
+        </EntityType>
+        <EntityType Name="customerAddressInfo">
+          <Key>
+            <PropertyRef Name="AddressNum" />
+          </Key>
+          <Property Name="AddressNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AddressXinxi" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="customerNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="contacts" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="isDel" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="customer" Relationship="Self.客户地址明细关联客户" FromRole="customerAddressInfo" ToRole="customer" />
+          <NavigationProperty Name="outWarehourse" Relationship="Self.出库单关联客户地址" FromRole="customerAddressInfo" ToRole="outWarehourse" />
+        </EntityType>
+        <EntityType Name="department">
+          <Key>
+            <PropertyRef Name="BmNum" />
+          </Key>
+          <Property Name="BmNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BmName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="createTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="isDel" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Staff" Relationship="Self.员工表关联部门表" FromRole="department" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="Location">
+          <Key>
+            <PropertyRef Name="LocationNum" />
+          </Key>
+          <Property Name="LocationNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LocationName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="warehourseNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="barcode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="isDisable" Type="Int32" Nullable="false" />
+          <Property Name="isDefult" Type="Int32" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="isDel" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="LossReportDetails" Relationship="Self.报损单明细关联库位" FromRole="Location" ToRole="LossReportDetails" />
+          <NavigationProperty Name="product" Relationship="Self.产品表关联库位表" FromRole="Location" ToRole="product" />
+          <NavigationProperty Name="outWareDetail" Relationship="Self.出库单明细关联库位" FromRole="Location" ToRole="outWareDetail" />
+          <NavigationProperty Name="warehourse" Relationship="Self.库位表关联仓库表" FromRole="Location" ToRole="warehourse" />
+          <NavigationProperty Name="putWareDetail" Relationship="Self.入库单明细关联库位" FromRole="Location" ToRole="putWareDetail" />
+          <NavigationProperty Name="transferDetail" Relationship="Self.移库单明细当前关联库位" FromRole="Location" ToRole="transferDetail" />
+          <NavigationProperty Name="transferDetail1" Relationship="Self.移库单明细移入关联库位" FromRole="Location" ToRole="transferDetail" />
+        </EntityType>
+        <EntityType Name="LossReport">
+          <Key>
+            <PropertyRef Name="LossReportNum" />
+          </Key>
+          <Property Name="LossReportNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LossReportTypeNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="orderNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ygNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="createTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="totalNum" Type="Int64" Nullable="false" />
+          <Property Name="OperationMode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="examineState" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="contents" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="isDel" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="LossReportType" Relationship="Self.报损单关联报损单类型" FromRole="LossReport" ToRole="LossReportType" />
+          <NavigationProperty Name="Staff" Relationship="Self.报损单关联员工" FromRole="LossReport" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="LossReportDetails">
+          <Key>
+            <PropertyRef Name="LossReportNum" />
+            <PropertyRef Name="LocationNum" />
+          </Key>
+          <Property Name="LossReportNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LocationNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="productNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="productCount" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Location" Relationship="Self.报损单明细关联库位" FromRole="LossReportDetails" ToRole="Location" />
+          <NavigationProperty Name="product" Relationship="Self.报损单明细关联产品" FromRole="LossReportDetails" ToRole="product" />
+        </EntityType>
+        <EntityType Name="LossReportType">
+          <Key>
+            <PropertyRef Name="LossReportTypeNum" />
+          </Key>
+          <Property Name="LossReportTypeNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LossReportTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="LossReport" Relationship="Self.报损单关联报损单类型" FromRole="LossReportType" ToRole="LossReport" />
+        </EntityType>
+        <EntityType Name="OutboundType">
+          <Key>
+            <PropertyRef Name="OutboundTypeNum" />
+          </Key>
+          <Property Name="OutboundTypeNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OutboundTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="outWarehourse" Relationship="Self.出库单关联出库单类型" FromRole="OutboundType" ToRole="outWarehourse" />
+        </EntityType>
+        <EntityType Name="outWareDetail">
+          <Key>
+            <PropertyRef Name="OutboundNum" />
+            <PropertyRef Name="productNum" />
+          </Key>
+          <Property Name="OutboundNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="productNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="productCount" Type="Int64" Nullable="false" />
+          <Property Name="totalMoney" Type="Double" Nullable="false" />
+          <Property Name="LocationNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Location" Relationship="Self.出库单明细关联库位" FromRole="outWareDetail" ToRole="Location" />
+          <NavigationProperty Name="product" Relationship="Self.出库单明细关联产品" FromRole="outWareDetail" ToRole="product" />
+        </EntityType>
+        <EntityType Name="outWarehourse">
+          <Key>
+            <PropertyRef Name="OutboundNum" />
+          </Key>
+          <Property Name="OutboundNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OutboundTypeNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="orderNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IssuanceDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="customerNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AddressNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ygNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="createTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="totalNum" Type="Int64" Nullable="false" />
+          <Property Name="totalAmount" Type="Double" Nullable="false" />
+          <Property Name="examineState" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OperationMode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="isDel" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="customer" Relationship="Self.出库单关联客户" FromRole="outWarehourse" ToRole="customer" />
+          <NavigationProperty Name="customerAddressInfo" Relationship="Self.出库单关联客户地址" FromRole="outWarehourse" ToRole="customerAddressInfo" />
+          <NavigationProperty Name="OutboundType" Relationship="Self.出库单关联出库单类型" FromRole="outWarehourse" ToRole="OutboundType" />
+          <NavigationProperty Name="Staff" Relationship="Self.出库单关联员工" FromRole="outWarehourse" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="position">
+          <Key>
+            <PropertyRef Name="ZwNum" />
+          </Key>
+          <Property Name="ZwNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ZwName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="isDel" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="position1" Relationship="Self.FK_position_position" FromRole="position" ToRole="position1" />
+          <NavigationProperty Name="position2" Relationship="Self.FK_position_position" FromRole="position1" ToRole="position" />
+          <NavigationProperty Name="Staff" Relationship="Self.员工表关联职位表" FromRole="position" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="product">
+          <Key>
+            <PropertyRef Name="productNum" />
+          </Key>
+          <Property Name="productNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Probarcode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="productName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="productCount" Type="Int64" Nullable="false" />
+          <Property Name="price" Type="Double" Nullable="false" />
+          <Property Name="Specifications" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="productLeixNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CompanyNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="contents" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LocationNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="customerNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="isDel" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Company" Relationship="Self.产品表关联单位表" FromRole="product" ToRole="Company" />
+          <NavigationProperty Name="customer" Relationship="Self.产品表关联客户表" FromRole="product" ToRole="customer" />
+          <NavigationProperty Name="Location" Relationship="Self.产品表关联库位表" FromRole="product" ToRole="Location" />
+          <NavigationProperty Name="LossReportDetails" Relationship="Self.报损单明细关联产品" FromRole="product" ToRole="LossReportDetails" />
+          <NavigationProperty Name="outWareDetail" Relationship="Self.出库单明细关联产品" FromRole="product" ToRole="outWareDetail" />
+          <NavigationProperty Name="productLeix" Relationship="Self.产品表关联类别表" FromRole="product" ToRole="productLeix" />
+          <NavigationProperty Name="putWareDetail" Relationship="Self.入库单明细关联产品" FromRole="product" ToRole="putWareDetail" />
+          <NavigationProperty Name="transferDetail" Relationship="Self.移库单明细关联产品" FromRole="product" ToRole="transferDetail" />
+        </EntityType>
+        <EntityType Name="productLeix">
+          <Key>
+            <PropertyRef Name="productLeixNum" />
+          </Key>
+          <Property Name="productLeixNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="productLeixName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Founder" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="createTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="contents" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="isDel" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="product" Relationship="Self.产品表关联类别表" FromRole="productLeix" ToRole="product" />
+        </EntityType>
+        <EntityType Name="putWareDetail">
+          <Key>
+            <PropertyRef Name="receiptNum" />
+            <PropertyRef Name="productNum" />
+          </Key>
+          <Property Name="receiptNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="productNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="productCount" Type="Int64" Nullable="false" />
+          <Property Name="totalMoney" Type="Double" Nullable="false" />
+          <Property Name="LocationNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Location" Relationship="Self.入库单明细关联库位" FromRole="putWareDetail" ToRole="Location" />
+          <NavigationProperty Name="product" Relationship="Self.入库单明细关联产品" FromRole="putWareDetail" ToRole="product" />
+        </EntityType>
+        <EntityType Name="putWarehourse">
+          <Key>
+            <PropertyRef Name="receiptNum" />
+          </Key>
+          <Property Name="receiptNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="receiptTypeNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="orderNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ygNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="supplierNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="createTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="totalNum" Type="Int64" Nullable="false" />
+          <Property Name="examineState" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OperationMode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="totalAmount" Type="Double" Nullable="false" />
+          <Property Name="contents" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="isDel" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="supplier" Relationship="Self.入库单关联供应商" FromRole="putWarehourse" ToRole="supplier" />
+          <NavigationProperty Name="receiptType" Relationship="Self.入库单关联入库单类型" FromRole="putWarehourse" ToRole="receiptType" />
+          <NavigationProperty Name="Staff" Relationship="Self.入库单关联员工" FromRole="putWarehourse" ToRole="Staff" />
+        </EntityType>
+        <EntityType Name="receiptType">
+          <Key>
+            <PropertyRef Name="receiptTypeNum" />
+          </Key>
+          <Property Name="receiptTypeNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="receiptTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="putWarehourse" Relationship="Self.入库单关联入库单类型" FromRole="receiptType" ToRole="putWarehourse" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="ygNumber" />
+          </Key>
+          <Property Name="ygNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LoginName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="loginPwd" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ygName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LoginNum" Type="Int32" Nullable="false" />
+          <Property Name="BmNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ZwNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <Property Name="isDel" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="department" Relationship="Self.员工表关联部门表" FromRole="Staff" ToRole="department" />
+          <NavigationProperty Name="LossReport" Relationship="Self.报损单关联员工" FromRole="Staff" ToRole="LossReport" />
+          <NavigationProperty Name="outWarehourse" Relationship="Self.出库单关联员工" FromRole="Staff" ToRole="outWarehourse" />
+          <NavigationProperty Name="position" Relationship="Self.员工表关联职位表" FromRole="Staff" ToRole="position" />
+          <NavigationProperty Name="putWarehourse" Relationship="Self.入库单关联员工" FromRole="Staff" ToRole="putWarehourse" />
+          <NavigationProperty Name="transfer" Relationship="Self.移库单关联员工" FromRole="Staff" ToRole="transfer" />
+        </EntityType>
+        <EntityType Name="supplier">
+          <Key>
+            <PropertyRef Name="supplierNum" />
+          </Key>
+          <Property Name="supplierNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="supplierLeix" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="supplierName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="chuanzhen" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="contacts" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="contents" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="isDel" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="putWarehourse" Relationship="Self.入库单关联供应商" FromRole="supplier" ToRole="putWarehourse" />
+          <NavigationProperty Name="supplierLeix1" Relationship="Self.供应商关联供应商类型" FromRole="supplier" ToRole="supplierLeix" />
+        </EntityType>
+        <EntityType Name="supplierLeix">
+          <Key>
+            <PropertyRef Name="supplierLeixNum" />
+          </Key>
+          <Property Name="supplierLeixNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="supplierLeixName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="supplier" Relationship="Self.供应商关联供应商类型" FromRole="supplierLeix" ToRole="supplier" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="transfer">
+          <Key>
+            <PropertyRef Name="transferNum" />
+          </Key>
+          <Property Name="transferNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="transferTypeNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="orderNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="totalNum" Type="Int64" Nullable="false" />
+          <Property Name="ygNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="createTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="OperationMode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="examineState" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="contents" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="isDel" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Staff" Relationship="Self.移库单关联员工" FromRole="transfer" ToRole="Staff" />
+          <NavigationProperty Name="transferType" Relationship="Self.移库单关联移库单类型" FromRole="transfer" ToRole="transferType" />
+        </EntityType>
+        <EntityType Name="transferDetail">
+          <Key>
+            <PropertyRef Name="transferNum" />
+            <PropertyRef Name="productNum" />
+          </Key>
+          <Property Name="transferNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="productNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="productCount" Type="Int64" Nullable="false" />
+          <Property Name="FrontLocationNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EndLocationNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Location" Relationship="Self.移库单明细当前关联库位" FromRole="transferDetail" ToRole="Location" />
+          <NavigationProperty Name="Location1" Relationship="Self.移库单明细移入关联库位" FromRole="transferDetail" ToRole="Location" />
+          <NavigationProperty Name="product" Relationship="Self.移库单明细关联产品" FromRole="transferDetail" ToRole="product" />
+        </EntityType>
+        <EntityType Name="transferType">
+          <Key>
+            <PropertyRef Name="transferTypeNum" />
+          </Key>
+          <Property Name="transferTypeNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="transferTypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="transfer" Relationship="Self.移库单关联移库单类型" FromRole="transferType" ToRole="transfer" />
+        </EntityType>
+        <EntityType Name="warehourse">
+          <Key>
+            <PropertyRef Name="warehourseNum" />
+          </Key>
+          <Property Name="warehourseNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="warehourseName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="warecode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Location" Relationship="Self.库位表关联仓库表" FromRole="warehourse" ToRole="Location" />
+        </EntityType>
+        <Association Name="产品表关联单位表">
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyNum" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="CompanyNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="产品表关联客户表">
+          <End Role="customer" Type="Self.customer" Multiplicity="0..1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="customerNum" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="customerNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="出库单关联客户">
+          <End Role="customer" Type="Self.customer" Multiplicity="1" />
+          <End Role="outWarehourse" Type="Self.outWarehourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="customerNum" />
+            </Principal>
+            <Dependent Role="outWarehourse">
+              <PropertyRef Name="customerNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="客户地址明细关联客户">
+          <End Role="customer" Type="Self.customer" Multiplicity="1" />
+          <End Role="customerAddressInfo" Type="Self.customerAddressInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customer">
+              <PropertyRef Name="customerNum" />
+            </Principal>
+            <Dependent Role="customerAddressInfo">
+              <PropertyRef Name="customerNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="出库单关联客户地址">
+          <End Role="customerAddressInfo" Type="Self.customerAddressInfo" Multiplicity="0..1" />
+          <End Role="outWarehourse" Type="Self.outWarehourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customerAddressInfo">
+              <PropertyRef Name="AddressNum" />
+            </Principal>
+            <Dependent Role="outWarehourse">
+              <PropertyRef Name="AddressNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="员工表关联部门表">
+          <End Role="department" Type="Self.department" Multiplicity="1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="department">
+              <PropertyRef Name="BmNum" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="BmNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="报损单明细关联库位">
+          <End Role="Location" Type="Self.Location" Multiplicity="1" />
+          <End Role="LossReportDetails" Type="Self.LossReportDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationNum" />
+            </Principal>
+            <Dependent Role="LossReportDetails">
+              <PropertyRef Name="LocationNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="产品表关联库位表">
+          <End Role="Location" Type="Self.Location" Multiplicity="1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationNum" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="LocationNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="出库单明细关联库位">
+          <End Role="Location" Type="Self.Location" Multiplicity="1" />
+          <End Role="outWareDetail" Type="Self.outWareDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationNum" />
+            </Principal>
+            <Dependent Role="outWareDetail">
+              <PropertyRef Name="LocationNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="库位表关联仓库表">
+          <End Role="warehourse" Type="Self.warehourse" Multiplicity="1" />
+          <End Role="Location" Type="Self.Location" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="warehourse">
+              <PropertyRef Name="warehourseNum" />
+            </Principal>
+            <Dependent Role="Location">
+              <PropertyRef Name="warehourseNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="入库单明细关联库位">
+          <End Role="Location" Type="Self.Location" Multiplicity="1" />
+          <End Role="putWareDetail" Type="Self.putWareDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationNum" />
+            </Principal>
+            <Dependent Role="putWareDetail">
+              <PropertyRef Name="LocationNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="移库单明细当前关联库位">
+          <End Role="Location" Type="Self.Location" Multiplicity="1" />
+          <End Role="transferDetail" Type="Self.transferDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationNum" />
+            </Principal>
+            <Dependent Role="transferDetail">
+              <PropertyRef Name="FrontLocationNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="移库单明细移入关联库位">
+          <End Role="Location" Type="Self.Location" Multiplicity="1" />
+          <End Role="transferDetail" Type="Self.transferDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationNum" />
+            </Principal>
+            <Dependent Role="transferDetail">
+              <PropertyRef Name="EndLocationNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="报损单关联报损单类型">
+          <End Role="LossReportType" Type="Self.LossReportType" Multiplicity="1" />
+          <End Role="LossReport" Type="Self.LossReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LossReportType">
+              <PropertyRef Name="LossReportTypeNum" />
+            </Principal>
+            <Dependent Role="LossReport">
+              <PropertyRef Name="LossReportTypeNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="报损单关联员工">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="LossReport" Type="Self.LossReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="ygNumber" />
+            </Principal>
+            <Dependent Role="LossReport">
+              <PropertyRef Name="ygNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="报损单明细关联产品">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="LossReportDetails" Type="Self.LossReportDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="productNum" />
+            </Principal>
+            <Dependent Role="LossReportDetails">
+              <PropertyRef Name="productNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="出库单关联出库单类型">
+          <End Role="OutboundType" Type="Self.OutboundType" Multiplicity="1" />
+          <End Role="outWarehourse" Type="Self.outWarehourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OutboundType">
+              <PropertyRef Name="OutboundTypeNum" />
+            </Principal>
+            <Dependent Role="outWarehourse">
+              <PropertyRef Name="OutboundTypeNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="出库单明细关联产品">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="outWareDetail" Type="Self.outWareDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="productNum" />
+            </Principal>
+            <Dependent Role="outWareDetail">
+              <PropertyRef Name="productNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="出库单关联员工">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="outWarehourse" Type="Self.outWarehourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="ygNumber" />
+            </Principal>
+            <Dependent Role="outWarehourse">
+              <PropertyRef Name="ygNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_position_position">
+          <End Role="position" Type="Self.position" Multiplicity="1" />
+          <End Role="position1" Type="Self.position" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="position">
+              <PropertyRef Name="ZwNum" />
+            </Principal>
+            <Dependent Role="position1">
+              <PropertyRef Name="ZwNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="员工表关联职位表">
+          <End Role="position" Type="Self.position" Multiplicity="1" />
+          <End Role="Staff" Type="Self.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="position">
+              <PropertyRef Name="ZwNum" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="ZwNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="产品表关联类别表">
+          <End Role="productLeix" Type="Self.productLeix" Multiplicity="1" />
+          <End Role="product" Type="Self.product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="productLeix">
+              <PropertyRef Name="productLeixNum" />
+            </Principal>
+            <Dependent Role="product">
+              <PropertyRef Name="productLeixNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="入库单明细关联产品">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="putWareDetail" Type="Self.putWareDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="productNum" />
+            </Principal>
+            <Dependent Role="putWareDetail">
+              <PropertyRef Name="productNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="移库单明细关联产品">
+          <End Role="product" Type="Self.product" Multiplicity="1" />
+          <End Role="transferDetail" Type="Self.transferDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product">
+              <PropertyRef Name="productNum" />
+            </Principal>
+            <Dependent Role="transferDetail">
+              <PropertyRef Name="productNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="入库单关联供应商">
+          <End Role="supplier" Type="Self.supplier" Multiplicity="1" />
+          <End Role="putWarehourse" Type="Self.putWarehourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="supplier">
+              <PropertyRef Name="supplierNum" />
+            </Principal>
+            <Dependent Role="putWarehourse">
+              <PropertyRef Name="supplierNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="入库单关联入库单类型">
+          <End Role="receiptType" Type="Self.receiptType" Multiplicity="1" />
+          <End Role="putWarehourse" Type="Self.putWarehourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="receiptType">
+              <PropertyRef Name="receiptTypeNum" />
+            </Principal>
+            <Dependent Role="putWarehourse">
+              <PropertyRef Name="receiptTypeNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="入库单关联员工">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="putWarehourse" Type="Self.putWarehourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="ygNumber" />
+            </Principal>
+            <Dependent Role="putWarehourse">
+              <PropertyRef Name="ygNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="移库单关联员工">
+          <End Role="Staff" Type="Self.Staff" Multiplicity="1" />
+          <End Role="transfer" Type="Self.transfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Staff">
+              <PropertyRef Name="ygNumber" />
+            </Principal>
+            <Dependent Role="transfer">
+              <PropertyRef Name="ygNumber" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="供应商关联供应商类型">
+          <End Role="supplierLeix" Type="Self.supplierLeix" Multiplicity="1" />
+          <End Role="supplier" Type="Self.supplier" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="supplierLeix">
+              <PropertyRef Name="supplierLeixNum" />
+            </Principal>
+            <Dependent Role="supplier">
+              <PropertyRef Name="supplierLeix" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="移库单关联移库单类型">
+          <End Role="transferType" Type="Self.transferType" Multiplicity="1" />
+          <End Role="transfer" Type="Self.transfer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="transferType">
+              <PropertyRef Name="transferTypeNum" />
+            </Principal>
+            <Dependent Role="transfer">
+              <PropertyRef Name="transferTypeNum" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CKSJKEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Company" EntityType="Self.Company" />
+          <EntitySet Name="customer" EntityType="Self.customer" />
+          <EntitySet Name="customerAddressInfo" EntityType="Self.customerAddressInfo" />
+          <EntitySet Name="department" EntityType="Self.department" />
+          <EntitySet Name="Location" EntityType="Self.Location" />
+          <EntitySet Name="LossReport" EntityType="Self.LossReport" />
+          <EntitySet Name="LossReportDetails" EntityType="Self.LossReportDetails" />
+          <EntitySet Name="LossReportType" EntityType="Self.LossReportType" />
+          <EntitySet Name="OutboundType" EntityType="Self.OutboundType" />
+          <EntitySet Name="outWareDetail" EntityType="Self.outWareDetail" />
+          <EntitySet Name="outWarehourse" EntityType="Self.outWarehourse" />
+          <EntitySet Name="position" EntityType="Self.position" />
+          <EntitySet Name="product" EntityType="Self.product" />
+          <EntitySet Name="productLeix" EntityType="Self.productLeix" />
+          <EntitySet Name="putWareDetail" EntityType="Self.putWareDetail" />
+          <EntitySet Name="putWarehourse" EntityType="Self.putWarehourse" />
+          <EntitySet Name="receiptType" EntityType="Self.receiptType" />
+          <EntitySet Name="Staff" EntityType="Self.Staff" />
+          <EntitySet Name="supplier" EntityType="Self.supplier" />
+          <EntitySet Name="supplierLeix" EntityType="Self.supplierLeix" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="transfer" EntityType="Self.transfer" />
+          <EntitySet Name="transferDetail" EntityType="Self.transferDetail" />
+          <EntitySet Name="transferType" EntityType="Self.transferType" />
+          <EntitySet Name="warehourse" EntityType="Self.warehourse" />
+          <AssociationSet Name="产品表关联单位表" Association="Self.产品表关联单位表">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="产品表关联客户表" Association="Self.产品表关联客户表">
+            <End Role="customer" EntitySet="customer" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="出库单关联客户" Association="Self.出库单关联客户">
+            <End Role="customer" EntitySet="customer" />
+            <End Role="outWarehourse" EntitySet="outWarehourse" />
+          </AssociationSet>
+          <AssociationSet Name="客户地址明细关联客户" Association="Self.客户地址明细关联客户">
+            <End Role="customer" EntitySet="customer" />
+            <End Role="customerAddressInfo" EntitySet="customerAddressInfo" />
+          </AssociationSet>
+          <AssociationSet Name="出库单关联客户地址" Association="Self.出库单关联客户地址">
+            <End Role="customerAddressInfo" EntitySet="customerAddressInfo" />
+            <End Role="outWarehourse" EntitySet="outWarehourse" />
+          </AssociationSet>
+          <AssociationSet Name="员工表关联部门表" Association="Self.员工表关联部门表">
+            <End Role="department" EntitySet="department" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="报损单明细关联库位" Association="Self.报损单明细关联库位">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="LossReportDetails" EntitySet="LossReportDetails" />
+          </AssociationSet>
+          <AssociationSet Name="产品表关联库位表" Association="Self.产品表关联库位表">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="出库单明细关联库位" Association="Self.出库单明细关联库位">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="outWareDetail" EntitySet="outWareDetail" />
+          </AssociationSet>
+          <AssociationSet Name="库位表关联仓库表" Association="Self.库位表关联仓库表">
+            <End Role="warehourse" EntitySet="warehourse" />
+            <End Role="Location" EntitySet="Location" />
+          </AssociationSet>
+          <AssociationSet Name="入库单明细关联库位" Association="Self.入库单明细关联库位">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="putWareDetail" EntitySet="putWareDetail" />
+          </AssociationSet>
+          <AssociationSet Name="移库单明细当前关联库位" Association="Self.移库单明细当前关联库位">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="transferDetail" EntitySet="transferDetail" />
+          </AssociationSet>
+          <AssociationSet Name="移库单明细移入关联库位" Association="Self.移库单明细移入关联库位">
+            <End Role="Location" EntitySet="Location" />
+            <End Role="transferDetail" EntitySet="transferDetail" />
+          </AssociationSet>
+          <AssociationSet Name="报损单关联报损单类型" Association="Self.报损单关联报损单类型">
+            <End Role="LossReportType" EntitySet="LossReportType" />
+            <End Role="LossReport" EntitySet="LossReport" />
+          </AssociationSet>
+          <AssociationSet Name="报损单关联员工" Association="Self.报损单关联员工">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="LossReport" EntitySet="LossReport" />
+          </AssociationSet>
+          <AssociationSet Name="报损单明细关联产品" Association="Self.报损单明细关联产品">
+            <End Role="product" EntitySet="product" />
+            <End Role="LossReportDetails" EntitySet="LossReportDetails" />
+          </AssociationSet>
+          <AssociationSet Name="出库单关联出库单类型" Association="Self.出库单关联出库单类型">
+            <End Role="OutboundType" EntitySet="OutboundType" />
+            <End Role="outWarehourse" EntitySet="outWarehourse" />
+          </AssociationSet>
+          <AssociationSet Name="出库单明细关联产品" Association="Self.出库单明细关联产品">
+            <End Role="product" EntitySet="product" />
+            <End Role="outWareDetail" EntitySet="outWareDetail" />
+          </AssociationSet>
+          <AssociationSet Name="出库单关联员工" Association="Self.出库单关联员工">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="outWarehourse" EntitySet="outWarehourse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_position_position" Association="Self.FK_position_position">
+            <End Role="position" EntitySet="position" />
+            <End Role="position1" EntitySet="position" />
+          </AssociationSet>
+          <AssociationSet Name="员工表关联职位表" Association="Self.员工表关联职位表">
+            <End Role="position" EntitySet="position" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="产品表关联类别表" Association="Self.产品表关联类别表">
+            <End Role="productLeix" EntitySet="productLeix" />
+            <End Role="product" EntitySet="product" />
+          </AssociationSet>
+          <AssociationSet Name="入库单明细关联产品" Association="Self.入库单明细关联产品">
+            <End Role="product" EntitySet="product" />
+            <End Role="putWareDetail" EntitySet="putWareDetail" />
+          </AssociationSet>
+          <AssociationSet Name="移库单明细关联产品" Association="Self.移库单明细关联产品">
+            <End Role="product" EntitySet="product" />
+            <End Role="transferDetail" EntitySet="transferDetail" />
+          </AssociationSet>
+          <AssociationSet Name="入库单关联供应商" Association="Self.入库单关联供应商">
+            <End Role="supplier" EntitySet="supplier" />
+            <End Role="putWarehourse" EntitySet="putWarehourse" />
+          </AssociationSet>
+          <AssociationSet Name="入库单关联入库单类型" Association="Self.入库单关联入库单类型">
+            <End Role="receiptType" EntitySet="receiptType" />
+            <End Role="putWarehourse" EntitySet="putWarehourse" />
+          </AssociationSet>
+          <AssociationSet Name="入库单关联员工" Association="Self.入库单关联员工">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="putWarehourse" EntitySet="putWarehourse" />
+          </AssociationSet>
+          <AssociationSet Name="移库单关联员工" Association="Self.移库单关联员工">
+            <End Role="Staff" EntitySet="Staff" />
+            <End Role="transfer" EntitySet="transfer" />
+          </AssociationSet>
+          <AssociationSet Name="供应商关联供应商类型" Association="Self.供应商关联供应商类型">
+            <End Role="supplierLeix" EntitySet="supplierLeix" />
+            <End Role="supplier" EntitySet="supplier" />
+          </AssociationSet>
+          <AssociationSet Name="移库单关联移库单类型" Association="Self.移库单关联移库单类型">
+            <End Role="transferType" EntitySet="transferType" />
+            <End Role="transfer" EntitySet="transfer" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CKSJKModelStoreContainer" CdmEntityContainer="CKSJKEntities">
+          <EntitySetMapping Name="Company">
+            <EntityTypeMapping TypeName="CKSJKModel.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="CompanyNum" ColumnName="CompanyNum" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="isDel" ColumnName="isDel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customer">
+            <EntityTypeMapping TypeName="CKSJKModel.customer">
+              <MappingFragment StoreEntitySet="customer">
+                <ScalarProperty Name="customerNum" ColumnName="customerNum" />
+                <ScalarProperty Name="customerName" ColumnName="customerName" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="chuanzhen" ColumnName="chuanzhen" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="contents" ColumnName="contents" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="isDel" ColumnName="isDel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customerAddressInfo">
+            <EntityTypeMapping TypeName="CKSJKModel.customerAddressInfo">
+              <MappingFragment StoreEntitySet="customerAddressInfo">
+                <ScalarProperty Name="AddressNum" ColumnName="AddressNum" />
+                <ScalarProperty Name="AddressXinxi" ColumnName="AddressXinxi" />
+                <ScalarProperty Name="customerNum" ColumnName="customerNum" />
+                <ScalarProperty Name="contacts" ColumnName="contacts" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="isDel" ColumnName="isDel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="department">
+            <EntityTypeMapping TypeName="CKSJKModel.department">
+              <MappingFragment StoreEntitySet="department">
+                <ScalarProperty Name="BmNum" ColumnName="BmNum" />
+                <ScalarProperty Name="BmName" ColumnName="BmName" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="isDel" ColumnName="isDel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Location">
+            <EntityTypeMapping TypeName="CKSJKModel.Location">
+              <MappingFragment StoreEntitySet="Location">
+                <ScalarProperty Name="LocationNum" ColumnName="LocationNum" />
+                <ScalarProperty Name="LocationName" ColumnName="LocationName" />
+                <ScalarProperty Name="warehourseNum" ColumnName="warehourseNum" />
+                <ScalarProperty Name="barcode" ColumnName="barcode" />
+                <ScalarProperty Name="isDisable" ColumnName="isDisable" />
+                <ScalarProperty Name="isDefult" ColumnName="isDefult" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="isDel" ColumnName="isDel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LossReport">
+            <EntityTypeMapping TypeName="CKSJKModel.LossReport">
+              <MappingFragment StoreEntitySet="LossReport">
+                <ScalarProperty Name="LossReportNum" ColumnName="LossReportNum" />
+                <ScalarProperty Name="LossReportTypeNum" ColumnName="LossReportTypeNum" />
+                <ScalarProperty Name="orderNo" ColumnName="orderNo" />
+                <ScalarProperty Name="ygNumber" ColumnName="ygNumber" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="totalNum" ColumnName="totalNum" />
+                <ScalarProperty Name="OperationMode" ColumnName="OperationMode" />
+                <ScalarProperty Name="examineState" ColumnName="examineState" />
+                <ScalarProperty Name="contents" ColumnName="contents" />
+                <ScalarProperty Name="isDel" ColumnName="isDel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LossReportDetails">
+            <EntityTypeMapping TypeName="CKSJKModel.LossReportDetails">
+              <MappingFragment StoreEntitySet="LossReportDetails">
+                <ScalarProperty Name="LossReportNum" ColumnName="LossReportNum" />
+                <ScalarProperty Name="LocationNum" ColumnName="LocationNum" />
+                <ScalarProperty Name="productNum" ColumnName="productNum" />
+                <ScalarProperty Name="productCount" ColumnName="productCount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LossReportType">
+            <EntityTypeMapping TypeName="CKSJKModel.LossReportType">
+              <MappingFragment StoreEntitySet="LossReportType">
+                <ScalarProperty Name="LossReportTypeNum" ColumnName="LossReportTypeNum" />
+                <ScalarProperty Name="LossReportTypeName" ColumnName="LossReportTypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OutboundType">
+            <EntityTypeMapping TypeName="CKSJKModel.OutboundType">
+              <MappingFragment StoreEntitySet="OutboundType">
+                <ScalarProperty Name="OutboundTypeNum" ColumnName="OutboundTypeNum" />
+                <ScalarProperty Name="OutboundTypeName" ColumnName="OutboundTypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="outWareDetail">
+            <EntityTypeMapping TypeName="CKSJKModel.outWareDetail">
+              <MappingFragment StoreEntitySet="outWareDetail">
+                <ScalarProperty Name="OutboundNum" ColumnName="OutboundNum" />
+                <ScalarProperty Name="productNum" ColumnName="productNum" />
+                <ScalarProperty Name="productCount" ColumnName="productCount" />
+                <ScalarProperty Name="totalMoney" ColumnName="totalMoney" />
+                <ScalarProperty Name="LocationNum" ColumnName="LocationNum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="outWarehourse">
+            <EntityTypeMapping TypeName="CKSJKModel.outWarehourse">
+              <MappingFragment StoreEntitySet="outWarehourse">
+                <ScalarProperty Name="OutboundNum" ColumnName="OutboundNum" />
+                <ScalarProperty Name="OutboundTypeNum" ColumnName="OutboundTypeNum" />
+                <ScalarProperty Name="orderNo" ColumnName="orderNo" />
+                <ScalarProperty Name="IssuanceDate" ColumnName="IssuanceDate" />
+                <ScalarProperty Name="customerNum" ColumnName="customerNum" />
+                <ScalarProperty Name="AddressNum" ColumnName="AddressNum" />
+                <ScalarProperty Name="ygNumber" ColumnName="ygNumber" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="totalNum" ColumnName="totalNum" />
+                <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
+                <ScalarProperty Name="examineState" ColumnName="examineState" />
+                <ScalarProperty Name="OperationMode" ColumnName="OperationMode" />
+                <ScalarProperty Name="isDel" ColumnName="isDel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="position">
+            <EntityTypeMapping TypeName="CKSJKModel.position">
+              <MappingFragment StoreEntitySet="position">
+                <ScalarProperty Name="ZwNum" ColumnName="ZwNum" />
+                <ScalarProperty Name="ZwName" ColumnName="ZwName" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="isDel" ColumnName="isDel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="product">
+            <EntityTypeMapping TypeName="CKSJKModel.product">
+              <MappingFragment StoreEntitySet="product">
+                <ScalarProperty Name="productNum" ColumnName="productNum" />
+                <ScalarProperty Name="Probarcode" ColumnName="Probarcode" />
+                <ScalarProperty Name="productName" ColumnName="productName" />
+                <ScalarProperty Name="productCount" ColumnName="productCount" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="Specifications" ColumnName="Specifications" />
+                <ScalarProperty Name="productLeixNum" ColumnName="productLeixNum" />
+                <ScalarProperty Name="CompanyNum" ColumnName="CompanyNum" />
+                <ScalarProperty Name="contents" ColumnName="contents" />
+                <ScalarProperty Name="LocationNum" ColumnName="LocationNum" />
+                <ScalarProperty Name="customerNum" ColumnName="customerNum" />
+                <ScalarProperty Name="isDel" ColumnName="isDel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="productLeix">
+            <EntityTypeMapping TypeName="CKSJKModel.productLeix">
+              <MappingFragment StoreEntitySet="productLeix">
+                <ScalarProperty Name="productLeixNum" ColumnName="productLeixNum" />
+                <ScalarProperty Name="productLeixName" ColumnName="productLeixName" />
+                <ScalarProperty Name="Founder" ColumnName="Founder" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="contents" ColumnName="contents" />
+                <ScalarProperty Name="isDel" ColumnName="isDel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="putWareDetail">
+            <EntityTypeMapping TypeName="CKSJKModel.putWareDetail">
+              <MappingFragment StoreEntitySet="putWareDetail">
+                <ScalarProperty Name="receiptNum" ColumnName="receiptNum" />
+                <ScalarProperty Name="productNum" ColumnName="productNum" />
+                <ScalarProperty Name="productCount" ColumnName="productCount" />
+                <ScalarProperty Name="totalMoney" ColumnName="totalMoney" />
+                <ScalarProperty Name="LocationNum" ColumnName="LocationNum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="putWarehourse">
+            <EntityTypeMapping TypeName="CKSJKModel.putWarehourse">
+              <MappingFragment StoreEntitySet="putWarehourse">
+                <ScalarProperty Name="receiptNum" ColumnName="receiptNum" />
+                <ScalarProperty Name="receiptTypeNum" ColumnName="receiptTypeNum" />
+                <ScalarProperty Name="orderNo" ColumnName="orderNo" />
+                <ScalarProperty Name="ygNumber" ColumnName="ygNumber" />
+                <ScalarProperty Name="supplierNum" ColumnName="supplierNum" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="totalNum" ColumnName="totalNum" />
+                <ScalarProperty Name="examineState" ColumnName="examineState" />
+                <ScalarProperty Name="OperationMode" ColumnName="OperationMode" />
+                <ScalarProperty Name="totalAmount" ColumnName="totalAmount" />
+                <ScalarProperty Name="contents" ColumnName="contents" />
+                <ScalarProperty Name="isDel" ColumnName="isDel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="receiptType">
+            <EntityTypeMapping TypeName="CKSJKModel.receiptType">
+              <MappingFragment StoreEntitySet="receiptType">
+                <ScalarProperty Name="receiptTypeNum" ColumnName="receiptTypeNum" />
+                <ScalarProperty Name="receiptTypeName" ColumnName="receiptTypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Staff">
+            <EntityTypeMapping TypeName="CKSJKModel.Staff">
+              <MappingFragment StoreEntitySet="Staff">
+                <ScalarProperty Name="ygNumber" ColumnName="ygNumber" />
+                <ScalarProperty Name="LoginName" ColumnName="LoginName" />
+                <ScalarProperty Name="loginPwd" ColumnName="loginPwd" />
+                <ScalarProperty Name="ygName" ColumnName="ygName" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="LoginNum" ColumnName="LoginNum" />
+                <ScalarProperty Name="BmNum" ColumnName="BmNum" />
+                <ScalarProperty Name="ZwNum" ColumnName="ZwNum" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="isDel" ColumnName="isDel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="supplier">
+            <EntityTypeMapping TypeName="CKSJKModel.supplier">
+              <MappingFragment StoreEntitySet="supplier">
+                <ScalarProperty Name="supplierNum" ColumnName="supplierNum" />
+                <ScalarProperty Name="supplierLeix" ColumnName="supplierLeix" />
+                <ScalarProperty Name="supplierName" ColumnName="supplierName" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="chuanzhen" ColumnName="chuanzhen" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="contacts" ColumnName="contacts" />
+                <ScalarProperty Name="address" ColumnName="address" />
+                <ScalarProperty Name="contents" ColumnName="contents" />
+                <ScalarProperty Name="isDel" ColumnName="isDel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="supplierLeix">
+            <EntityTypeMapping TypeName="CKSJKModel.supplierLeix">
+              <MappingFragment StoreEntitySet="supplierLeix">
+                <ScalarProperty Name="supplierLeixNum" ColumnName="supplierLeixNum" />
+                <ScalarProperty Name="supplierLeixName" ColumnName="supplierLeixName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="CKSJKModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="transfer">
+            <EntityTypeMapping TypeName="CKSJKModel.transfer">
+              <MappingFragment StoreEntitySet="transfer">
+                <ScalarProperty Name="transferNum" ColumnName="transferNum" />
+                <ScalarProperty Name="transferTypeNum" ColumnName="transferTypeNum" />
+                <ScalarProperty Name="orderNo" ColumnName="orderNo" />
+                <ScalarProperty Name="totalNum" ColumnName="totalNum" />
+                <ScalarProperty Name="ygNumber" ColumnName="ygNumber" />
+                <ScalarProperty Name="createTime" ColumnName="createTime" />
+                <ScalarProperty Name="OperationMode" ColumnName="OperationMode" />
+                <ScalarProperty Name="examineState" ColumnName="examineState" />
+                <ScalarProperty Name="contents" ColumnName="contents" />
+                <ScalarProperty Name="isDel" ColumnName="isDel" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="transferDetail">
+            <EntityTypeMapping TypeName="CKSJKModel.transferDetail">
+              <MappingFragment StoreEntitySet="transferDetail">
+                <ScalarProperty Name="transferNum" ColumnName="transferNum" />
+                <ScalarProperty Name="productNum" ColumnName="productNum" />
+                <ScalarProperty Name="productCount" ColumnName="productCount" />
+                <ScalarProperty Name="FrontLocationNum" ColumnName="FrontLocationNum" />
+                <ScalarProperty Name="EndLocationNum" ColumnName="EndLocationNum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="transferType">
+            <EntityTypeMapping TypeName="CKSJKModel.transferType">
+              <MappingFragment StoreEntitySet="transferType">
+                <ScalarProperty Name="transferTypeNum" ColumnName="transferTypeNum" />
+                <ScalarProperty Name="transferTypeName" ColumnName="transferTypeName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="warehourse">
+            <EntityTypeMapping TypeName="CKSJKModel.warehourse">
+              <MappingFragment StoreEntitySet="warehourse">
+                <ScalarProperty Name="warehourseNum" ColumnName="warehourseNum" />
+                <ScalarProperty Name="warehourseName" ColumnName="warehourseName" />
+                <ScalarProperty Name="warecode" ColumnName="warecode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

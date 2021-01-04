@@ -9,6 +9,10 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>入库管理</title>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/layui-v2.5.7/layui/layui.js"></script>
+    <link href="~/layui-v2.5.7/layui/css/layui.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
     <div>
@@ -33,7 +37,7 @@
                         </div>
 
                         <div class="actions  pull-right">
-                            <a class="btn btn-primary" href="/InStorage/Product/Add"><i class="icon-pencil"></i>&nbsp;新增</a>
+                            <a class="btn btn-primary" href="/InaStorage/Product/Add"><i class="icon-pencil"></i>&nbsp;新增</a>
                             <a class="btn btn-danger" href="javascript:void(0)" onclick="InStorageManager.DeleteBatch()"><i class="icon-trash"></i>&nbsp;删除</a>
                             <a class="btn btn-info" href="javascript:void(0)" onclick="InStorageManager.ToExcel()"><i class="icon-download"></i>&nbsp;导出</a>
                         </div>
@@ -119,7 +123,24 @@
                         </tr>
                     </thead>
                     <tbody>
+
                     </tbody>
                 </table>
+                <script>
+                    $(document).ready(function () {
+                        InStorageManager.PageClick(1, 10);
+                        InStorageManager.TabClick();
+                        InStorageManager.SearchEvent();
+                        $("#txtOrderNum,#txtSupplier,#txtPlanNum").keydown(function (e) {
+                            if (e.keyCode == 13) {
+                                InStorageManager.PageClick(1, 10);
+                            }
+                        });
+                    });
+                    //查询
+                    function query() {
+
+                    }
+                </script>
 </body>
 </html>
