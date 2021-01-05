@@ -55,7 +55,7 @@
           "child": [
             {
               "title": "库位管理",
-              "href": "",
+              "href": "/SZH/KeWei",
               "icon": "fa fa-asterisk",
               "target": "_self"
             },

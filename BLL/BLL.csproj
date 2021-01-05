@@ -42,13 +42,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="S\GongYingBLL.cs" />
+    <Compile Include="S\KeWeiBLL.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="H\" />
     <Folder Include="L\" />
-    <Folder Include="S\" />
     <Folder Include="X\" />
     <Folder Include="Z\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{e0784939-4032-411b-87dd-edb27b7f39f2}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Models\Models.csproj">
+      <Project>{c2f5198b-2dc5-46cc-800f-089826e0d563}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

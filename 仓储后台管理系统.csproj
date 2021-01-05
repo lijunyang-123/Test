@@ -45,6 +45,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -247,6 +250,7 @@
     <Content Include="layui-v2.5.7\免责声明.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\layui.css" />
     <Content Include="仓库\css\layuimini.css" />
     <Content Include="仓库\css\public.css" />
     <Content Include="仓库\css\themes\default.css" />
@@ -476,12 +480,13 @@
     <Content Include="仓库\README.md" />
     <Content Include="Views\LJY\Main.cshtml" />
     <Content Include="Views\LJY\Ruku.cshtml" />
+    <Content Include="Views\SZH\KeWei.cshtml" />
+    <Content Include="Views\SZH\GongYing.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Views\HLL\" />
-    <Folder Include="Views\SZH\" />
     <Folder Include="Views\XML\" />
     <Folder Include="Views\ZYY\" />
     <Folder Include="仓库\page\table\" />
@@ -498,6 +503,16 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="BLL\BLL.csproj">
+      <Project>{371d18ba-8986-417d-9024-67f17a8319b3}</Project>
+      <Name>BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="Models\Models.csproj">
+      <Project>{c2f5198b-2dc5-46cc-800f-089826e0d563}</Project>
+      <Name>Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

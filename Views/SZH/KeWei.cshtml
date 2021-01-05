@@ -1,0 +1,136 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <link href="~/Scripts/layui.css" rel="stylesheet" />
+    <title>KeWei</title>
+</head>
+<body style=" margin:auto; width:1100px; margin-top:20px">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" style="background-color: #EFEFEF; border-bottom: 1px solid #e0dede;height:30px;width:1100px; ">
+                <div class="row">
+                    <div class="col-md-3 ">
+                        <label style="margin-top: 5px">库位管理</label>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div class="col-xs-1 col-xs-offset-9">
+                                <a><input type="button" class="layui-btn layui-btn-sm" style="width:60px;" value="新增"></a>
+                            </div>
+                            <div class="col-xs-2">
+                                <a><input type="button" class="layui-btn layui-btn-danger layui-btn-sm" style="width:60px;" value="删除"></a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+
+    @*背景颜色可以自己选*@
+    <div style="">
+        @*//搜索*@
+        <div style="margin-left:20px">
+            <a style="text-decoration: none ">类别</a>
+            <select style="width:160px;height:26px" id="CategoryId" name="CategoryId">
+                <option value="0">请选择</option>
+                @*@foreach (var a in ViewBag.gg)
+                {
+                    <option value="@a.warehourseNum">@a.warehourseName</option>
+                }*@
+                <option value="1">正式库区</option>
+                <option value="2">待入库区</option>
+                <option value="3">待检库区</option>
+                <option value="4">待出库区</option>
+                <option value="5">报损库区</option>
+
+            </select>
+            <a style="text-decoration: none ">库位</a>
+            <input type="text" name="name" placeholder="请输入库位名" width="300" class="layui-text" id="nuname"/>
+            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm layui-btn-normal" style="width:60px; height:28px" onclick="get()">搜索</button>
+        </div>
+
+        <div class="layui-form">
+            <table class="layui-table">
+                <colgroup>
+                    <col width="150">
+                    <col width="150">
+                    <col width="200">
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>库位编号</th>
+                        <th>库位名</th>
+                        <th>所在仓库</th>
+                        <th>库位类别</th>
+                        <th>是否禁用</th>
+                        <th>是否默认</th>
+                        <th>创建时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="tba">
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="demo7"></div>
+</body>
+</html>
+<script>
+    $(function () {
+       // get();
+    });
+    function get() {
+        //获取下拉索引
+        var index = document.getElementById("CategoryId").selectedIndex;
+        //获取值
+        if (index != 0) {
+            var shu = document.getElementById("CategoryId").options[index].innerHTML;
+        } else{
+            var shu = null;
+        }
+        
+        //获取文本值
+        var name = document.getElementById("nuname").value;
+        alert(shu+name);
+        //$.ajax({
+        //    type: "post",
+        //    contentType: "application/json",
+        //    data: "{pageIndex:" + pageIndex + ",pageSize:" + pageSize + ",warehourseName" + shu + ",}",
+        //    dataType: "json",
+        //    url: "/SZH/GetKu",
+        //    success: function (result) {
+        //        $("#tab tr").remove();
+        //        $.each(result, function (index, data) {
+        //            $("#tab").append(" <thead><tr><td>" +
+        //                data.Id + "</td><td>" +
+        //                data.Title + "</td><td>" +
+        //                data.Author + "</td><td>" +
+        //                data.UnitPrice + "</td><td>" +
+        //                data.Name + "</td><td>" +
+        //                data.PuName + "</td></tr>" +
+        //                "</thead> ");
+        //        })
+        //    },
+        //    error: function (res) {
+        //        alert(res.responseText);
+        //    }
+        //})
+    }
+</script>
