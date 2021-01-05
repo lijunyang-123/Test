@@ -98,6 +98,7 @@
     <Compile Include="outWarehourse.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="PageList.cs" />
     <Compile Include="position.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
