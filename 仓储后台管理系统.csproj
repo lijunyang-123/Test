@@ -482,13 +482,13 @@
     <Content Include="仓库\README.md" />
     <Content Include="Views\LJY\Main.cshtml" />
     <Content Include="Views\LJY\Ruku.cshtml" />
+    <Content Include="Views\XML\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Views\HLL\" />
     <Folder Include="Views\SZH\" />
-    <Folder Include="Views\XML\" />
     <Folder Include="Views\ZYY\" />
     <Folder Include="仓库\page\table\" />
   </ItemGroup>
