@@ -10,24 +10,27 @@
     <meta name="viewport" content="width=device-width" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/layui-v2.5.7/layui/layui.js"></script>
     <link href="~/Scripts/layui.css" rel="stylesheet" />
+
     <title>GongYing</title>
 </head>
 <body style=" margin:auto; width:1100px; margin-top:20px">
     <div class="container">
         <div class="row">
-            <div class="col-md-12" style="background-color: #EFEFEF; border-bottom: 1px solid #e0dede;height:30px;width:1000px;margin-left:50px ">
+            <div class="col-md-12" style="background-color: #EFEFEF; border-bottom: 1px solid #e0dede;height:30px;width:1100px; ">
                 <div class="row">
                     <div class="col-md-3 ">
-                        <label style="margin-top: 5px">基本设置</label>
+                        <label style="margin-top: 5px">供应商管理</label>
                     </div>
                     <div class="col-md-9">
                         <div class="row">
                             <div class="col-xs-1 col-xs-offset-9">
-                                <a><input type="button" class="layui-btn layui-btn-sm" style="width:60px;" value="新增"></a>
+                                <a><input type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" style="width:60px;" value="新增" id="y-modalBtnAdd"></a>
                             </div>
                             <div class="col-xs-2">
-                                <a><input type="button" class="layui-btn layui-btn-danger layui-btn-sm" style="width:60px;" value="删除"></a>
+                                <a><input type="button" class="layui-btn layui-btn-danger layui-btn-sm" style="width:60px;" value="删除" onclick="del(this)"></a>
                             </div>
                         </div>
 
@@ -41,29 +44,24 @@
     @*背景颜色可以自己选*@
     <div style="">
         @*//搜索*@
-        <div class="col-xs-offset-1">
-            <a style="text-decoration: none ">按姓名搜索:</a>
-            <input type="text" name="name" placeholder="请输入姓名" width="300" class="layui-text" />
-            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm layui-btn-normal" style="width:60px; height:28px">搜索</button>
+        <div style="margin-left:20px">
+            <input type="text" name="name" placeholder="请输入供应商编号" width="500" class="layui-text" id="shu" />
+            <input type="text" name="name" placeholder="请输入供应商名称" width="500" class="layui-text" id="name" />
+            <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" style="width:60px; height:28px" onclick="Set()">搜索</button>
         </div>
 
-        <div class="layui-form">
-            <table class="layui-table">
-                <colgroup>
-                    <col width="150">
-                    <col width="150">
-                    <col width="200">
-                    <col>
-                </colgroup>
+        <div>
+            <table class="layui-table" id="tab">
                 <thead>
+
                     <tr>
-                        <th><input type="checkbox" name="checkbox1" value=""/></th>
+                        <td><input type="checkbox" name="name" value="" id="check" /></td>
                         <th>供应商编号</th>
                         <th>供应商类型</th>
                         <th>供应商名称</th>
                         <th>电话</th>
                         <th>传真</th>
-                        <th>EMail</th>
+                        <th>Email</th>
                         <th>联系人</th>
                         <th>地址</th>
                         <th>描述</th>
@@ -71,28 +69,481 @@
                     </tr>
                 </thead>
                 <tbody id="tba">
-                    
                 </tbody>
             </table>
         </div>
+        <div id="demo"></div>
     </div>
 
-    <div id="demo7"></div>
+    @*新增的页面*@
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">新增供应商</h4>
+
+                </div>
+                <div class="modal-body">
+                    <table style="border-collapse:separate; border-spacing:0px 10px;">
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">供应商编号</label>
+                            </td>
+                            <td>
+                                <input type="text" name="phone" lay-verify="required" autocomplete="off" class="layui-input" style="height: 36px; width: 460px; margin-left: 15px" placeholder="自动编程，无需输入" readonly="readonly">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">供应商名称</label>
+                            </td>
+                            <td>
+                                <input type="text" id="supplierName" name="phone" lay-verify="required" autocomplete="off" class="layui-input" style="height:36px;width:460px;margin-left:15px" placeholder="请输入供应商名称">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">供应商类型</label>
+                            </td>
+                            <td>
+                                <select style="width:460px;height:36px;margin-left:15px;margin-left:15px" id="CategoryId" name="CategoryId">
+                                    <option value="0">请选择</option>
+                                    @foreach (var a in ViewBag.gg)
+                                    {
+                                        <option value="@a.supplierLeixNum">@a.supplierLeixName</option>
+                                    }
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">传真</label>
+                            </td>
+                            <td>
+                                <input type="text" name="phone" id="chuanzhen" lay-verify="required" autocomplete="off" class="layui-input" style="height:36px;width:460px;margin-left:15px">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">Email</label>
+                            </td>
+                            <td>
+                                <input type="text" name="phone" id="Email" lay-verify="required" autocomplete="off" class="layui-input" style="height:36px;width:460px;margin-left:15px">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">电话</label>
+                            </td>
+                            <td>
+                                <input type="text" name="phone" id="phone" lay-verify="required" autocomplete="off" class="layui-input" style="height:36px;width:460px;margin-left:15px">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">联系人</label>
+                            </td>
+                            <td>
+                                <input type="text" name="phone" id="contacts" lay-verify="required" autocomplete="off" class="layui-input" style="height:36px;width:460px;margin-left:15px" placeholder="请输入其联系人">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">地址</label>
+                            </td>
+                            <td>
+                                <input type="text" name="phone" id="address" lay-verify="required" autocomplete="off" class="layui-input" style="height:36px;width:460px;margin-left:15px" placeholder="请输入地址">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">描述</label>
+                            </td>
+                            <td>
+                                <input type="text" name="phone" id="contents" lay-verify="required" autocomplete="off" class="layui-input" style="height:36px;width:460px;margin-left:15px">
+                            </td>
+                        </tr>
+
+
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="insert()" data-dismiss="modal">保存</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    @*//修改*@
+    <div class="modal fade" id="myModal_1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">修改供应商信息</h4>
+
+                </div>
+                <div class="modal-body">
+                    <table style="border-collapse:separate; border-spacing:0px 10px;">
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">供应商编号</label>
+                            </td>
+                            <td>
+                                <input type="text" id="supplierNum_1" name="phone" lay-verify="required" autocomplete="off" class="layui-input" style="height: 36px; width: 460px; margin-left: 15px" placeholder="自动编程，无需输入" readonly="readonly">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">供应商名称</label>
+                            </td>
+                            <td>
+                                <input type="text" id="supplierName_1" name="phone" lay-verify="required" autocomplete="off" class="layui-input" style="height:36px;width:460px;margin-left:15px" placeholder="请输入供应商名称">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">供应商类型</label>
+                            </td>
+                            <td>
+                                <select style="width:460px;height:36px;margin-left:15px;margin-left:15px" id="CategoryId_1" name="CategoryId">
+                                    <option value="0">请选择</option>
+                                    @foreach (var a in ViewBag.gg)
+                                    {
+                                        <option value="@a.supplierLeixNum">@a.supplierLeixName</option>
+                                    }
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">传真</label>
+                            </td>
+                            <td>
+                                <input type="text" name="phone" id="chuanzhen_1" lay-verify="required" autocomplete="off" class="layui-input" style="height:36px;width:460px;margin-left:15px">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">Email</label>
+                            </td>
+                            <td>
+                                <input type="text" name="phone" id="Email_1" lay-verify="required" autocomplete="off" class="layui-input" style="height:36px;width:460px;margin-left:15px">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">电话</label>
+                            </td>
+                            <td>
+                                <input type="text" name="phone" id="phone_1" lay-verify="required" autocomplete="off" class="layui-input" style="height:36px;width:460px;margin-left:15px">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">联系人</label>
+                            </td>
+                            <td>
+                                <input type="text" name="phone" id="contacts_1" lay-verify="required" autocomplete="off" class="layui-input" style="height:36px;width:460px;margin-left:15px" placeholder="请输入其联系人">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">地址</label>
+                            </td>
+                            <td>
+                                <input type="text" name="phone" id="address_1" lay-verify="required" autocomplete="off" class="layui-input" style="height:36px;width:460px;margin-left:15px" placeholder="请输入地址">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">描述</label>
+                            </td>
+                            <td>
+                                <input type="text" name="phone" id="contents_1" lay-verify="required" autocomplete="off" class="layui-input" style="height:36px;width:460px;margin-left:15px">
+                            </td>
+                        </tr>
+
+
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="update()" data-dismiss="modal">保存</button>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
 </body>
 </html>
 <script>
-    layui.use(['laypage', 'layer'], function () {
-        var laypage = layui.laypage
-            , layer = layui.layer;
-        //完整功能
-        laypage.render({
-            elem: 'demo7'
-            , count: 100
-            , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
-            , jump: function (obj) {
-                console.log(obj)
+    $(function () {
+        Set();
+        get(1, 10);
+    })
+    function get(pageIndex,pageSize){
+        //获取文本值
+        var shu = document.getElementById("shu").value;
+        var name = document.getElementById("name").value;
+        $.ajax({
+            type: "post",
+            data: "{pageIndex:" + pageIndex + ",pageSize:" + pageSize + ",Id:'" + shu + "',name:'" + name + "'}",
+            contentType: "application/json",
+            dataType: "json",
+            url: "/SZH/SelectGongYing",
+            success: function (result) {
+                $("#tba tr").remove();
+                var shu = 0;
+                $.each(result, function (index, data) {
+                    $("#tba").append("<tr>" +
+                        " <td><input type='checkbox' name='chk' value='" + data.supplierNum
+                        + "'/></td>" +
+                        "<td>"+
+                        data.supplierNum + "</td><td>" +
+                        data.supplierLeix + "</td><td>" +
+                        data.supplierName + "</td><td>" +
+                        data.phone + "</td><td>" +
+                        data.chuanzhen + "</td><td>" +
+                        data.email + "</td><td>" +
+                        data.contacts + "</td><td>" +
+                        data.address + "</td><td>"  +
+                        data.contents + "</td><td>"+
+                        "<button class= 'layui-btn layui-btn-xs' onclick='selectOne(" + shu + ")' data-toggle='modal' data-target='#myModal_1'> 编辑</button>"+
+                        "<button class='layui-btn layui-btn-danger layui-btn-xs' onclick='deletes("+shu+")'>删除</button>"
+                        + "</td></tr>");
+                    shu++;
+                })
+            },
+            error: function (res) {
+                alert(res.responseText);
             }
-        });
+        })
+    };
 
+
+    function Set() {
+        //获取文本值
+        var shu = document.getElementById("shu").value;
+        var name = document.getElementById("name").value;
+        $.ajax({
+            type: "post",
+            contentType: "application/json",
+            data: "{ Id:'" + shu + "',name:'" + name + "'}",
+            dataType: "json",
+            url: "/SZH/SelectGongYings",
+            success: function (result) {
+                //获取总条数
+                rows = result;
+                layui.use(['laypage', 'layer'], function () {
+                    var laypage = layui.laypage
+                        , layer = layui.layer;
+                    //完整功能
+                    laypage.render({
+                        elem: 'demo',
+                         count: rows,
+                        layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'],
+                        jump: function (obj, first) {
+                            //判断查询
+                            if (first) {
+                                get(1, 10);
+                            } else if(!first) {
+                                    get(obj.curr,obj.limit);
+                                }
+                            console.log(obj)
+                        }
+                    });
+
+                });
+            },
+            error: function (ex) {
+                alert(ex.responseText);
+            }
+        })
+    };
+
+        //新增
+                function insert() {
+                var supplierName = document.getElementById("supplierName").value;
+                var phone = document.getElementById("phone").value;
+                var chuanzhen = document.getElementById("chuanzhen").value;
+                var email = document.getElementById("Email").value;
+                var contacts = document.getElementById("contacts").value;
+                var address = document.getElementById("address").value;
+                var contents = document.getElementById("contents").value;
+                var index = document.getElementById("CategoryId").selectedIndex;
+                var supplierLeix = document.getElementById("CategoryId").options[index].value;
+                if (supplierName == "" || contacts == "" || index == 0 || address == "") {
+                    alert("请将有文字说明的必填项进行填写");
+                } else {
+                    $.ajax({
+                        type: "post",
+                        data: "{supplierName:'" + supplierName + "',phone:'" + phone + "',chuanzhen:'" + chuanzhen + "',email:'" + email + "',contacts:'" + contacts + "',address:'" + address + "',contents:'" + contents + "',supplierLeix:'" + supplierLeix + "'}",
+                        contentType: "application/json",
+                        dataType: "json",
+                        url: "/SZH/AddGongYing",
+                        success: function (result) {
+                            alert(result);
+                            Set();
+                            document.getElementById("supplierName").value = "";
+                            document.getElementById("phone").value = "";
+                            document.getElementById("chuanzhen").value = "";
+                            document.getElementById("Email").value = "";
+                            document.getElementById("contacts").value = "";
+                            document.getElementById("address").value = "";
+                            document.getElementById("contents").value = "";
+                            document.getElementById("CategoryId").selectedIndex = "";
+                        },
+                        error: function (res) {
+                            alert(res.responseText);
+                        }
+                    })
+                }
+    }
+
+    //删除
+    function deletes(shu) {
+        
+        if (confirm('确定删除吗？')) {
+            var name = document.getElementById("tab").getElementsByTagName("tr")[shu + 1].getElementsByTagName("td")[1].innerHTML;
+              $.ajax({
+                type: "post",
+                data: "{supplierNum:'" + name +"'}",
+                contentType: "application/json",
+                dataType: "json",
+                url: "/SZH/DeleteGongYing",
+                success: function (result) {
+                    alert(result);
+                    Set();
+                },
+                error: function (res) {
+                    alert(res.responseText);
+                }
+            })
+        }
+    }
+
+    //复选框
+    $("#check").click(function () {
+        var cf = $("#check").prop("checked");
+        $("[name=chk]").prop("checked", cf);//prop设置属性值
     });
+    //全选删除
+    function del() {
+        if (confirm('确认删除吗？')) {
+            var count = 0;
+            $("input[name='chk']:checked").each(function () {
+             var   n = $(this).parents("tr").index();
+                var name = document.getElementById("tab").getElementsByTagName("tr")[n+1].getElementsByTagName("td")[1].innerHTML;
+                $.ajax({
+                    type: "post",
+                    data: "{supplierNum:'" + name + "'}",
+                    contentType: "application/json",
+                    dataType: "json",
+                    url: "/SZH/DeleteGongYings",
+                    success: function (result) {
+                        Set();
+                    },
+                    error: function (res) {
+                        alert(res.responseText);
+                    },
+                });
+                count++;
+            });
+            if (count > 0) {
+                alert("有" + count + "项数据删除成功！");
+            } else {
+                alert("删除失败！");
+            }
+        }
+    }
+
+    //修改赋值
+    function selectOne(shu) {
+        var name = document.getElementById("tab").getElementsByTagName("tr")[shu + 1].getElementsByTagName("td")[1].innerHTML;
+        $.ajax({
+            type: "post",
+            data: "{supplierNum:'" + name + "'}",
+            contentType: "application/json",
+            dataType: "json",
+            url: "/SZH/SelectOneGongYing",
+            success: function (result) {
+                $.each(result, function (index, data) {
+                    document.getElementById("supplierNum_1").value = data.supplierNum;
+                    document.getElementById("supplierName_1").value = data.supplierName;
+                    document.getElementById("phone_1").value = data.phone;
+                    document.getElementById("chuanzhen_1").value = data.chuanzhen;
+                    document.getElementById("Email_1").value = data.email;
+                    document.getElementById("contacts_1").value = data.contacts;
+                    document.getElementById("address_1").value = data.address;
+                    document.getElementById("contents_1").value = data.contents;
+                    document.getElementById("CategoryId_1").selectedIndex = 1;
+                });
+            },
+            error: function (res) {
+                alert(res.responseText);
+            }
+        })
+    }
+    //修改
+    function update() {
+        var supplierName = document.getElementById("supplierName_1").value;
+        var phone = document.getElementById("phone_1").value;
+        var chuanzhen = document.getElementById("chuanzhen_1").value;
+        var email = document.getElementById("Email_1").value;
+        var contacts = document.getElementById("contacts_1").value;
+        var address = document.getElementById("address_1").value;
+        var contents = document.getElementById("contents_1").value;
+        var index = document.getElementById("CategoryId_1").selectedIndex;
+        var supplierLeix = document.getElementById("CategoryId_1").options[index].value;
+        var supplierNum = document.getElementById("supplierNum_1").value;
+
+
+        if (supplierName == "" || contacts == "" || index == 0 || address == "") {
+            alert("请将有文字说明的必填项进行填写");
+        } else {
+            $.ajax({
+                type: "post",
+                data: "{supplierName:'" + supplierName + "',phone:'" + phone + "',chuanzhen:'" + chuanzhen + "',email:'" + email + "',contacts:'" + contacts + "',address:'" + address + "',contents:'" + contents + "',supplierLeix:'" + supplierLeix + "',supplierNum:'" + supplierNum+"'}",
+                contentType: "application/json",
+                dataType: "json",
+                url: "/SZH/UdpateGongYing",
+                success: function (result) {
+                    alert(result);
+                    Set();
+                },
+                error: function (res) {
+                    alert(res.responseText);
+                }
+            })
+        }
+    }
+
+
 </script>

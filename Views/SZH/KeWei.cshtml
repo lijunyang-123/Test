@@ -50,7 +50,7 @@
                     <option value="@a.warehourseNum">@a.warehourseName</option>
                 }*@
                 <option value="1">正式库区</option>
-                <option value="2">待入库区</option>
+                <option value="2w">待入库区</option>
                 <option value="3">待检库区</option>
                 <option value="4">待出库区</option>
                 <option value="5">报损库区</option>
@@ -99,6 +99,8 @@
     function get() {
         //获取下拉索引
         var index = document.getElementById("CategoryId").selectedIndex;
+        //获取options的值
+        var hhh = document.getElementById("CategoryId").options[index].value;
         //获取值
         if (index != 0) {
             var shu = document.getElementById("CategoryId").options[index].innerHTML;
@@ -108,7 +110,7 @@
         
         //获取文本值
         var name = document.getElementById("nuname").value;
-        alert(shu+name);
+        alert(hhh);
         //$.ajax({
         //    type: "post",
         //    contentType: "application/json",

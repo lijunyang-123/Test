@@ -24,5 +24,6 @@ namespace DAL.S
             var list = from p in ck.warehourse select p;
             return  list.ToList();
         }
+       
     }
 }
