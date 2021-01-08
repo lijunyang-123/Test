@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="L\RuluManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="S\GongYingBLL.cs" />
     <Compile Include="S\KeWeiBLL.cs" />
@@ -48,6 +49,7 @@
   <ItemGroup>
     <Folder Include="H\" />
     <Folder Include="L\" />
+    <Folder Include="S\" />
     <Folder Include="X\" />
     <Folder Include="Z\" />
   </ItemGroup>
