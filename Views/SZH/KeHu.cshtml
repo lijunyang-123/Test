@@ -1,0 +1,777 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/layui-v2.5.7/layui/layui.js"></script>
+    <link href="~/Scripts/layui.css" rel="stylesheet" />
+    <title>KeHu</title>
+</head>
+<body style=" margin:auto; width:1100px; margin-top:20px">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" style="background-color: #EFEFEF; border-bottom: 1px solid #e0dede;height:30px;width:1100px;">
+                <div class="row">
+                    <div class="col-md-3 ">
+                        <label style="margin-top: 5px">客户管理</label>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div class="col-xs-1 col-xs-offset-9">
+                                <a><input type="button" class="btn btn-primary btn-sm" style="width:60px;" value="新增" id="y-modalBtnAdd" onclick="QingLi()" data-toggle="modal" data-target="#myModal"></a>
+                            </div>
+                            <div class="col-xs-2">
+                                <a><input type="button" class="layui-btn layui-btn-danger layui-btn-sm" style="width:60px;" value="删除" onclick="del()"></a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+
+    @*背景颜色可以自己选*@
+    <div style="">
+        @*//搜索*@
+        <div style="margin-left:20px">
+            <input type="text" name="name" placeholder="请输入客户编号" width="500" class="layui-text" id="Num" />
+            <input type="text" name="name" placeholder="请输入客户名称" width="500" class="layui-text" id="name" />
+            <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" style="width:60px; height:28px" onclick="Set()">搜索</button>
+        </div>
+
+        <div>
+            <table class="layui-table" id="tab">
+                <thead>
+                    <tr>
+                        <td><input type="checkbox" name="name" value="" id="check" /></td>
+                        <th>客户编号</th>
+                        <th>客户名称</th>
+                        <th>电话</th>
+                        <th>传真</th>
+                        <th>创建时间</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="tba">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="demo"></div>
+
+    @*客户新增*@
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">新增客户</h4>
+                </div>
+                <div class="modal-body">
+                    <table style="border-collapse:separate; border-spacing:0px 10px;">
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">客户编号</label>
+                            </td>
+                            <td>
+                                <input type="text" name="phone" lay-verify="required" autocomplete="off" class="layui-input" style="height: 36px; width: 200px; margin-left: 15px" placeholder="自动编程，无需输入" readonly="readonly">
+                            </td>
+                            <td>
+                                <label style="font-size: 14px;margin-left: 15px">客户名称</label>
+                            </td>
+                            <td>
+                                <input type="text" id="customerName" name="phone" lay-verify="required" autocomplete="off" class="layui-input" style="height: 36px; width: 200px; margin-left: 15px" placeholder="请输入客户名称">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">Eamil</label>
+                            </td>
+                            <td>
+                                <input type="text" id="email" name="phone" lay-verify="required" autocomplete="off" class="layui-input" style="height: 36px; width: 200px; margin-left: 15px">
+                            </td>
+                            <td>
+                                <label style="font-size: 14px;margin-left: 15px">电话</label>
+                            </td>
+                            <td>
+                                <input type="text" id="phone" name="phone" lay-verify="required" autocomplete="off" class="layui-input" style="height: 36px; width: 200px; margin-left: 15px">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">传真</label>
+                            </td>
+                            <td>
+                                <input type="text" id="chuanzhen" name="phone" lay-verify="required" autocomplete="off" class="layui-input" style="height: 36px; width: 200px; margin-left: 15px">
+                            </td>
+                            <td>
+                                <label style="font-size: 14px;margin-left: 15px">备注</label>
+                            </td>
+                            <td>
+                                <input type="text" id="contents" name="phone" lay-verify="required" autocomplete="off" class="layui-input" style="height: 36px; width: 200px; margin-left: 15px">
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="layui-table" lay-even="" lay-skin="row" id="xiangxi">
+                        <thead>
+                            <tr>
+                                <th>地址编号</th>
+                                <th>地址</th>
+                                <th>联系人</th>
+                                <th>电话</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="quanbu">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal_2">新增地址</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="insert()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*客户修改*@
+    <div class="modal fade" id="myModal_1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">修改客户</h4>
+                </div>
+                <div class="modal-body">
+                    <table style="border-collapse:separate; border-spacing:0px 10px;">
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">客户编号</label>
+                            </td>
+                            <td>
+                                <input type="text" id="customerNum" name="phone" lay-verify="required" autocomplete="off" class="layui-input" style="height: 36px; width: 200px; margin-left: 15px" placeholder="自动编程，无需输入" readonly="readonly">
+                            </td>
+                            <td>
+                                <label style="font-size: 14px;margin-left: 15px">客户名称</label>
+                            </td>
+                            <td>
+                                <input type="text" id="customerName_1" name="phone" lay-verify="required" autocomplete="off" class="layui-input" style="height: 36px; width: 200px; margin-left: 15px" placeholder="请输入客户名称">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">Eamil</label>
+                            </td>
+                            <td>
+                                <input type="text" id="email_1" name="phone" lay-verify="required" autocomplete="off" class="layui-input" style="height: 36px; width: 200px; margin-left: 15px">
+                            </td>
+                            <td>
+                                <label style="font-size: 14px;margin-left: 15px">电话</label>
+                            </td>
+                            <td>
+                                <input type="text" id="phone_1" name="phone" lay-verify="required" autocomplete="off" class="layui-input" style="height: 36px; width: 200px; margin-left: 15px">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">传真</label>
+                            </td>
+                            <td>
+                                <input type="text" id="chuanzhen_1" name="phone" lay-verify="required" autocomplete="off" class="layui-input" style="height: 36px; width: 200px; margin-left: 15px">
+                            </td>
+                            <td>
+                                <label style="font-size: 14px;margin-left: 15px">备注</label>
+                            </td>
+                            <td>
+                                <input type="text" id="beizhi" name="phone" lay-verify="required" autocomplete="off" class="layui-input" style="height: 36px; width: 200px; margin-left: 15px">
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table class="layui-table" lay-even="" lay-skin="row" id="xiangxi_1">
+                        <thead>
+                            <tr>
+                                <th>地址编号</th>
+                                <th>地址</th>
+                                <th>联系人</th>
+                                <th>电话</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="quanbu_1">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal_2">新增地址</button>
+                    <button type="button" class="btn btn-default" onclick="QingLi()" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="Udpate()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*新增客户地址*@
+    <div class="modal fade" id="myModal_2" data-remote="/home/test">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">新增地址</h4>
+                </div>
+                <div class="modal-body">
+                    <table style="border-collapse:separate; border-spacing:0px 10px;">
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">地址编号</label>
+                            </td>
+                            <td>
+                                <input type="text" name="phone" id="AddressNum" lay-verify="required" autocomplete="off" class="layui-input" style="height: 36px; width: 460px; margin-left: 15px" placeholder="自动编程，无需输入" readonly="readonly">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">地址</label>
+                            </td>
+                            <td>
+                                <input type="text" id="AddressXinxi" name="phone" lay-verify="required" autocomplete="off" class="layui-input" style="height:36px;width:460px;margin-left:15px" placeholder="请输入地址">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">联系人</label>
+                            </td>
+                            <td>
+                                <input type="text" name="phone" id="contacts" lay-verify="required" autocomplete="off" class="layui-input" style="height:36px;width:460px;margin-left:15px">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">电话</label>
+                            </td>
+                            <td>
+                                <input type="text" name="phone" id="phones" lay-verify="required" autocomplete="off" class="layui-input" style="height:36px;width:460px;margin-left:15px">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="DiZhiAdd()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @*修改客户地址*@
+    <div class="modal fade" id="myModal_3">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">修改地址</h4>
+                </div>
+                <div class="modal-body">
+                    <table style="border-collapse:separate; border-spacing:0px 10px;">
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">地址编号</label>
+                            </td>
+                            <td>
+                                <input type="text" name="phone" id="AddressNum_1" lay-verify="required" autocomplete="off" class="layui-input" style="height: 36px; width: 460px; margin-left: 15px" placeholder="自动编程，无需输入" readonly="readonly">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">地址</label>
+                            </td>
+                            <td>
+                                <input type="text" id="AddressXinxi_1" name="phone" lay-verify="required" autocomplete="off" class="layui-input" style="height:36px;width:460px;margin-left:15px" placeholder="请输入地址">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">联系人</label>
+                            </td>
+                            <td>
+                                <input type="text" name="phone" id="contacts_1" lay-verify="required" autocomplete="off" class="layui-input" style="height:36px;width:460px;margin-left:15px">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">电话</label>
+                            </td>
+                            <td>
+                                <input type="text" name="phone" id="phones_1" lay-verify="required" autocomplete="off" class="layui-input" style="height:36px;width:460px;margin-left:15px">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="UdpateDiZhi()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
+<script>
+    $(function () {
+        Set();
+        get(1, 10);
+    })
+    function get(pageIndex, pageSize) {
+        //获取文本值
+        var shu = document.getElementById("Num").value;
+        var name = document.getElementById("name").value;
+        $.ajax({
+            type: "post",
+            data: "{pageIndex:" + pageIndex + ",pageSize:" + pageSize + ",customerNum:'" + shu + "',customerName:'" + name + "'}",
+            contentType: "application/json",
+            dataType: "json",
+            url: "/SZH/SelectKeHu",
+            success: function (result) {
+                $("#tba tr").remove();
+                var shu = 0;
+                $.each(result, function (index, data) {
+                    $("#tba").append("<tr>" +
+                        " <td><input type='checkbox' name='chk' value='" + data.customerNum
+                        + "'/></td>" +
+                        "<td>" +
+                        data.customerNum + "</td><td>" +
+                        data.customerName + "</td><td>" +
+                        data.phone + "</td><td>" +
+                        data.chuanzhen + "</td><td>" +
+                        data.createTime + "</td><td>" +
+                        "<button class= 'layui-btn layui-btn-xs' onclick='SelectOne(" + shu + ")'data-toggle='modal' data-target='#myModal_1'> 编辑</button>" +
+                        "<button class='layui-btn layui-btn-danger layui-btn-xs' onclick='deletes(" + shu + ")'>删除</button>"
+                        + "</td></tr>");
+                    shu++;
+                })
+            },
+            error: function (res) {
+                alert(res.responseText);
+            }
+        })
+    };
+
+    function Set() {
+        //获取文本值
+        var shu = document.getElementById("Num").value;
+        var name = document.getElementById("name").value;
+        $.ajax({
+            type: "post",
+            contentType: "application/json",
+            data: "{ customerNum:'" + shu + "',customerName:'" + name + "'}",
+            dataType: "json",
+            url: "/SZH/SelectKeHus",
+            success: function (result) {
+                //获取总条数
+                rows = result;
+                layui.use(['laypage', 'layer'], function () {
+                    var laypage = layui.laypage
+                        , layer = layui.layer;
+                    //完整功能
+                    laypage.render({
+                        elem: 'demo',
+                        count: rows,
+                        layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'],
+                        jump: function (obj, first) {
+                            //判断查询
+                            if (first) {
+                                get(1, 10);
+                            } else if (!first) {
+                                get(obj.curr, obj.limit);
+                            }
+                            console.log(obj)
+                        }
+                    });
+
+                });
+            },
+            error: function (ex) {
+                alert(ex.responseText);
+            }
+        })
+    };
+    //删除
+    function deletes(shu) {
+
+        if (confirm('确定删除吗？')) {
+            var name = document.getElementById("tab").getElementsByTagName("tr")[shu + 1].getElementsByTagName("td")[1].innerHTML;
+            $.ajax({
+                type: "post",
+                data: "{customerNum:'" + name + "'}",
+                contentType: "application/json",
+                dataType: "json",
+                url: "/SZH/DeleteKeHu",
+                success: function (result) {
+                    alert("删除成功！");
+                    Set();
+                },
+                error: function (res) {
+                    alert(res.responseText);
+                }
+            })
+        }
+    }
+    //复选框
+    $("#check").click(function () {
+        var cf = $("#check").prop("checked");
+        $("[name=chk]").prop("checked", cf);//prop设置属性值
+    });
+    //全选删除
+    function del() {
+        if (confirm('确认删除吗？')) {
+            var count = 0;
+            $("input[name='chk']:checked").each(function () {
+                var n = $(this).parents("tr").index();
+                var name = document.getElementById("tab").getElementsByTagName("tr")[n + 1].getElementsByTagName("td")[1].innerHTML;
+                $.ajax({
+                    type: "post",
+                    data: "{customerNum:'" + name + "'}",
+                    contentType: "application/json",
+                    dataType: "json",
+                    url: "/SZH/DeleteKeHu",
+                    success: function (result) {
+                        Set();
+                    },
+                    error: function (res) {
+                        alert(res.responseText);
+                    },
+                });
+                count++;
+            });
+            if (count > 0) {
+                alert("有" + count + "项数据删除成功！");
+            } else {
+                alert("删除失败！");
+            }
+        }
+    }
+    //新增客户
+    function insert() {
+        var customerName = document.getElementById("customerName").value;
+        var phone = document.getElementById("phone").value;
+        var chuanzhen = document.getElementById("chuanzhen").value;
+        var email = document.getElementById("email").value;
+        var contacts = document.getElementById("contacts").value;
+        if (customerName == "") {
+            alert("请将客户名称进行填写");
+        } else {
+            $.ajax({
+                type: "post",
+                data: "{customerName:'" + customerName + "',phone:'" + phone + "',chuanzhen:'" + chuanzhen + "',email:'" + email + "',contacts:'" + contacts + "'}",
+                contentType: "application/json",
+                dataType: "json",
+                url: "/SZH/InsertKeHu",
+                success: function (result) {
+                    alert(result);
+                     document.getElementById("customerName").value="";
+                    document.getElementById("phone").value = "";
+                    document.getElementById("chuanzhen").value = "";
+                    document.getElementById("email").value = "";
+                    document.getElementById("contacts").value = "";
+                    Set();
+                    $('#myModal').modal('hide');
+                },
+                error: function (res) {
+                    alert(res.responseText);
+                }
+            })
+        }
+    }
+    //查询客户的一条信息
+    function SelectOne(shu) {
+        var name = document.getElementById("tab").getElementsByTagName("tr")[shu + 1].getElementsByTagName("td")[1].innerHTML;
+        $.ajax({
+            type: "post",
+            data: "{customerNum:'" + name + "'}",
+            contentType: "application/json",
+            dataType: "json",
+            url: "/SZH/SelectOne",
+            success: function (result) {
+                $.each(result, function (index, data) {
+                    document.getElementById("customerNum").value = data.customerNum;
+                    document.getElementById("customerName_1").value = data.customerName;
+                    document.getElementById("phones_1").value = data.phone;
+                    document.getElementById("chuanzhen_1").value = data.chuanzhen;
+                    document.getElementById("email_1").value = data.email;
+                    document.getElementById("beizhi").value = data.contents;
+                    SelectDiZhiUpdate();
+                });
+            },
+            error: function (res) {
+                alert(res.responseText);
+            }
+        })
+    }
+    //修改客户
+    function Udpate() {
+        var bianhao = document.getElementById("customerNum").value;
+        var customerName = document.getElementById("customerName_1").value;
+        var phone = document.getElementById("phone_1").value;
+        var chuanzhen = document.getElementById("chuanzhen_1").value;
+        var email = document.getElementById("email_1").value;
+        var contacts = document.getElementById("beizhi").value;
+        if (customerName == "") {
+            alert("请将客户名称进行填写");
+        } else {
+            $.ajax({
+                type: "post",
+                data: "{customerName:'" + customerName + "',phone:'" + phone + "',chuanzhen:'" + chuanzhen + "',email:'" + email + "',contacts:'" + contacts + "',bianhao:'" + bianhao + "'}",
+                contentType: "application/json",
+                dataType: "json",
+                url: "/SZH/UdpateKeHu",
+                success: function (result) {
+                    alert(result);
+                    document.getElementById("customerNum").value = "";
+                    document.getElementById("customerName_1").value = "";
+                    document.getElementById("phone_1").value = "";
+                    document.getElementById("chuanzhen_1").value = "";
+                    document.getElementById("email_1").value = "";
+                    document.getElementById("contacts_1").value = "";
+                    Set();
+                    $('#myModal_1').modal('hide');
+                },
+                error: function (res) {
+                    alert(res.responseText);
+                }
+            })
+        }
+    }
+    //修改的新增地址
+    function DiZhiAdd() {
+        var bianhao = document.getElementById("customerNum").value;
+        var phone = document.getElementById("phones").value;
+        var AddressXinxi = document.getElementById("AddressXinxi").value;
+        var contacts = document.getElementById("contacts").value;
+        if (AddressXinxi == "") {
+            alert("请将地址进行填写");
+        } else { 
+            $.ajax({
+                type: "post",
+                data: "{AddressXinxi:'" + AddressXinxi + "',phone:'" + phone + "',bianhao:'" + bianhao +  "',contacts:'" + contacts + "'}",
+                contentType: "application/json",
+                dataType: "json",
+                url: "/SZH/InsertDiZhi",
+                success: function (result) {
+                    alert(result);
+                    document.getElementById("AddressXinxi").value = "";
+                    document.getElementById("phone").value = "";
+                    document.getElementById("contacts").value = "";
+                    Set();
+                    $('#myModal_2').modal('hide');
+                    if (bianhao == "") {
+                        SelectDiZhi();
+                    } else {
+                        SelectDiZhiUpdate();
+                    }
+                },
+                error: function (res) {
+                    alert(res.responseText);
+                }
+            })
+        }
+    }
+    //新增的查询地址
+    function SelectDiZhi() {
+        $.ajax({
+            type: "post",
+            data: "{}",
+            contentType: "application/json",
+            dataType: "json",
+            url: "/SZH/SelectDiZhi",
+            success: function (result) {
+                $("#quanbu tr").remove();
+                var shu = 0;
+                $.each(result, function (index, data) {
+                    $("#quanbu").append("<tr><td>" +
+                        data.AddressNum + "</td><td>" +
+                        data.AddressXinxi + "</td><td>" +
+                        data.contacts + "</td><td>" +
+                        data.phone + "</td><td>" +
+                        "<button class= 'layui-btn layui-btn-xs' onclick='selectOneDiZhi(" + shu + ")'data-toggle='modal' data-target='#myModal_3'> 编辑</button>" +
+                        "<button class='layui-btn layui-btn-danger layui-btn-xs' onclick='delectDiZhi(" + shu + ")'>删除</button>"
+                        + "</td></tr>");
+                    shu++;
+                }) 
+            },
+            error: function (res) {
+                alert(res.responseText);
+            }
+        })
+    }
+    //修改的查询地址
+    function SelectDiZhiUpdate() {
+        var bianhao = document.getElementById("customerNum").value;
+        $.ajax({
+            type: "post",
+            data: "{bianhao:'" + bianhao + "'}",
+            contentType: "application/json",
+            dataType: "json",
+            url: "/SZH/SelectDiZhiUpdate",
+            success: function (result) {
+                $("#quanbu_1 tr").remove();
+                var shu = 0;
+                $.each(result, function (index, data) {
+                    $("#quanbu_1").append("<tr><td>" +
+                        data.AddressNum + "</td><td>" +
+                        data.AddressXinxi + "</td><td>" +
+                        data.contacts + "</td><td>" +
+                        data.phone + "</td><td>" +
+                        "<button class= 'layui-btn layui-btn-xs' onclick='selectOneDiZhi_1(" + shu + ")'data-toggle='modal' data-target='#myModal_3'> 编辑</button>" +
+                        "<button class='layui-btn layui-btn-danger layui-btn-xs' onclick='delectDiZhi_1(" + shu + ")'>删除</button>"
+                        + "</td></tr>");
+                    shu++;
+                })
+            },
+            error: function (res) {
+                alert(res.responseText);
+            }
+        })
+    }
+    //删除地址
+    function delectDiZhi(shu) {
+        if (confirm('确定删除吗？')) {
+            var name = document.getElementById("xiangxi").getElementsByTagName("tr")[shu + 1].getElementsByTagName("td")[0].innerHTML;
+            alert(name);
+            $.ajax({
+                type: "post",
+                data: "{AddressNum:'" + name + "'}",
+                contentType: "application/json",
+                dataType: "json",
+                url: "/SZH/DeleteDiZhi",
+                success: function (result) {
+                    alert("删除成功！");
+                    SelectDiZhi();
+                },
+                error: function (res) {
+                    alert(res.responseText);
+                }
+            })
+        }
+    }
+    //查询一条地址
+    function selectOneDiZhi(shu) {
+        var name = document.getElementById("xiangxi").getElementsByTagName("tr")[shu + 1].getElementsByTagName("td")[0].innerHTML;
+        $.ajax({
+            type: "post",
+            data: "{AddressNum:'" + name + "'}",
+            contentType: "application/json",
+            dataType: "json",
+            url: "/SZH/SelectOneDiZhi",
+            success: function (result) {
+                $.each(result, function (index, data) {
+                    document.getElementById("AddressNum_1").value = data.AddressNum;
+                    document.getElementById("AddressXinxi_1").value = data.AddressXinxi;
+                    document.getElementById("phones_1").value = data.phone;
+                    document.getElementById("contacts_1").value = data.contacts;
+                    
+                });
+            },
+            error: function (res) {
+                alert(res.responseText);
+            }
+        })
+    }
+    //修改地址
+    function UdpateDiZhi() {
+        var AddressNum = document.getElementById("AddressNum_1").value;
+        var phone = document.getElementById("phones_1").value;
+        var AddressXinxi = document.getElementById("AddressXinxi_1").value;
+        var contacts = document.getElementById("contacts_1").value;
+        var bianhao = document.getElementById("customerNum").value;
+        if (AddressXinxi == "") {
+            alert("请将地址进行填写");
+        } else {
+            $.ajax({
+                type: "post",
+                data: "{AddressXinxi:'" + AddressXinxi + "',phone:'" + phone + "',AddressNum:'" + AddressNum + "',contacts:'" + contacts + "'}",
+                contentType: "application/json",
+                dataType: "json",
+                url: "/SZH/UdpateDiZhi",
+                success: function (result) {
+                    alert(result);
+                    $('#myModal_3').modal('hide');
+                    if (bianhao == "") {
+                        SelectDiZhi();
+                    } else{
+                        SelectDiZhiUpdate();
+                    }
+                },
+                error: function (res) {
+                    alert(res.responseText);
+                }
+            })
+        }
+    }
+    //修改的删除地址
+    function delectDiZhi_1(shu) {
+        if (confirm('确定删除吗？')) {
+            var name = document.getElementById("xiangxi_1").getElementsByTagName("tr")[shu + 1].getElementsByTagName("td")[0].innerHTML;
+            alert(name);
+            $.ajax({
+                type: "post",
+                data: "{AddressNum:'" + name + "'}",
+                contentType: "application/json",
+                dataType: "json",
+                url: "/SZH/DeleteDiZhi",
+                success: function (result) {
+                    alert("删除成功！");
+                    SelectDiZhiUpdate();
+                },
+                error: function (res) {
+                    alert(res.responseText);
+                }
+            })
+        }
+    }
+    //修改的查询一条地址
+    function selectOneDiZhi_1(shu) {
+        var name = document.getElementById("xiangxi_1").getElementsByTagName("tr")[shu + 1].getElementsByTagName("td")[0].innerHTML;
+        $.ajax({
+            type: "post",
+            data: "{AddressNum:'" + name + "'}",
+            contentType: "application/json",
+            dataType: "json",
+            url: "/SZH/SelectOneDiZhi",
+            success: function (result) {
+                $.each(result, function (index, data) {
+                    document.getElementById("AddressNum_1").value = data.AddressNum;
+                    document.getElementById("AddressXinxi_1").value = data.AddressXinxi;
+                    document.getElementById("phones_1").value = data.phone;
+                    document.getElementById("contacts_1").value = data.contacts;
+
+                });
+            },
+            error: function (res) {
+                alert(res.responseText);
+            }
+        })
+    }
+    function QingLi() {
+        document.getElementById("customerNum").value = "";
+    }
+</script>

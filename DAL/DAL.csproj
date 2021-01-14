@@ -57,13 +57,15 @@
   <ItemGroup>
     <Compile Include="L\RukuService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="S\ChanPinDAL.cs" />
+    <Compile Include="S\DanWeiDAL.cs" />
     <Compile Include="S\GongYing.cs" />
+    <Compile Include="S\KeHuDAL.cs" />
     <Compile Include="S\KeWeiDAL.cs" />
+    <Compile Include="S\LeiBieDAL.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="H\" />
-    <Folder Include="L\" />
-    <Folder Include="S\" />
     <Folder Include="X\" />
     <Folder Include="Z\" />
   </ItemGroup>

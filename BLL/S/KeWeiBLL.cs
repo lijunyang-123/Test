@@ -11,9 +11,9 @@ namespace BLL.S
    
    public class KeWeiBLL
     {
-        public static List<Location> Location()
+        public  List<Location> Location()
         {
-            return KeWeiDAL.Location();
+            return new KeWeiDAL().Location();
         }
 
         //查询仓库表
@@ -22,5 +22,33 @@ namespace BLL.S
             return new DAL.S.KeWeiDAL().Warehourses();
         }
 
+
+
+
+        //修改
+        public int Update(Location war)
+        {
+
+            return new KeWeiDAL().Update(war);
         }
+
+        //删除
+        public int delete(string id)
+        {
+
+            return new KeWeiDAL().delete(id);
+        }
+
+        //是否禁用
+        public int JinYong(string id, int isDisable)
+        {
+
+            return new KeWeiDAL().JinYong(id,isDisable);
+        }
+        //新增
+        public int Add(Location war)
+        {
+            return new KeWeiDAL().Add(war);
+        }
+    }
 }

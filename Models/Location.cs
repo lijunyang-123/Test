@@ -31,7 +31,7 @@ namespace Models
         public string barcode { get; set; }
         public int isDisable { get; set; }
         public int isDefult { get; set; }
-        public System.DateTime CreateTime { get; set; }
+        public System.DateTime  CreateTime { get; set; }
         public int isDel { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

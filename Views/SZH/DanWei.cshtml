@@ -1,0 +1,323 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/layui-v2.5.7/layui/layui.js"></script>
+    <link href="~/Scripts/layui.css" rel="stylesheet" />
+    <title>DanWei</title>
+</head>
+<body style=" margin:auto; width:1100px; margin-top:20px">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" style="background-color: #EFEFEF; border-bottom: 1px solid #e0dede;height:30px;width:1100px;">
+                <div class="row">
+                    <div class="col-md-3 ">
+                        <label style="margin-top: 5px">计量单位</label>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div class="col-xs-1 col-xs-offset-9">
+                                <a><input type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#myModal" style="width:60px;" value="新增" id="y-modalBtnAdd"></a>
+                            </div>
+                            <div class="col-xs-2">
+                                <a><input type="button" class="layui-btn layui-btn-danger layui-btn-sm" style="width:60px;" value="删除" onclick="del()"> </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr />
+
+    @*背景颜色可以自己选*@
+    <div style="">
+        @*//搜索*@
+        <div style="margin-left: 20px ">
+            <input type="text" name="name" placeholder="请输入编号" width="300" class="layui-text" id="id" />
+            <input type="text" name="name" placeholder="请输入单位名称" width="300" class="layui-text" id="name" />
+            <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" style="width:60px; height:28px" onclick="Set()">搜索</button>
+        </div>
+
+        <div>
+            <table class="layui-table" id="tab">
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>编号</th>
+                        <th>名称</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="tba">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="demo"></div>
+
+
+    @*新增*@
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">新增计量单位</h4>
+
+                </div>
+                <div class="modal-body">
+                    <table style="border-collapse:separate; border-spacing:0px 10px;">
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">编号</label>
+                            </td>
+                            <td>
+                                <input type="text" name="phone" lay-verify="required" autocomplete="off" class="layui-input" style="height: 36px; width: 460px; margin-left: 15px" placeholder="自动编程，无需输入" readonly="readonly">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">名称</label>
+                            </td>
+                            <td>
+                                <input type="text" id="CompanyName" name="phone" lay-verify="required" autocomplete="off" class="layui-input" style="height:36px;width:460px;margin-left:15px" placeholder="请输入计量单位名称">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="insert()">保存</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="modal fade" id="myModal_1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">编辑计量单位</h4>
+
+                </div>
+                <div class="modal-body">
+                    <table style="border-collapse:separate; border-spacing:0px 10px;">
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">编号</label>
+                            </td>
+                            <td>
+                                <input type="text" name="phone" id="CompanyNum" lay-verify="required" autocomplete="off" class="layui-input" style="height: 36px; width: 460px; margin-left: 15px" placeholder="自动编程，无需输入" readonly="readonly">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">名称</label>
+                            </td>
+                            <td>
+                                <input type="text" id="CompanyName_1" name="phone" lay-verify="required" autocomplete="off" class="layui-input" style="height:36px;width:460px;margin-left:15px" placeholder="请输入计量单位名称">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="Udapte()">保存</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</body>
+</html>
+<script>
+    $(function () {
+        Set();
+        get(1, 10);
+    })
+    function get(pageIndex, pageSize) {
+        //获取文本值
+        var shu = document.getElementById("id").value;
+        var name = document.getElementById("name").value;
+        $.ajax({
+            type: "post",
+            data: "{pageIndex:" + pageIndex + ",pageSize:" + pageSize + ",id:'" + shu + "',name:'" + name + "'}",
+            contentType: "application/json",
+            dataType: "json",
+            url: "/SZH/SelectDanWei",
+            success: function (result) {
+                $("#tba tr").remove();
+                var shu = 0; var jj = 1;
+                $.each(result, function (index, data) {
+                    $("#tba").append("<tr>" +
+                        "<td>" +
+                        jj + "</td><td>" +
+                        data.CompanyNum + "</td><td>" +
+                        data.CompanyName + "</td><td>" +
+                        "<button class= 'layui-btn layui-btn-xs' onclick='SelectOne(" + shu + ")' data-toggle='modal' data-target='#myModal_1'> 编辑</button>" +
+                        "<button class='layui-btn layui-btn-danger layui-btn-xs' onclick='deletes(" + shu + ")'>删除</button>"
+                        + "</td></tr>");
+                    shu++;
+                    jj++;
+                })
+            },
+            error: function (res) {
+                alert(res.responseText);
+            }
+        })
+    };
+
+
+    function Set() {
+        //获取文本值
+        var shu = document.getElementById("id").value;
+        var name = document.getElementById("name").value;
+        $.ajax({
+            type: "post",
+            contentType: "application/json",
+            data: "{ id:'" + shu + "',name:'" + name + "'}",
+            dataType: "json",
+            url: "/SZH/SelectDanWeis",
+            success: function (result) {
+                //获取总条数
+                rows = result;
+                layui.use(['laypage', 'layer'], function () {
+                    var laypage = layui.laypage
+                        , layer = layui.layer;
+                    //完整功能
+                    laypage.render({
+                        elem: 'demo',
+                        count: rows,
+                        layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'],
+                        jump: function (obj, first) {
+                            //判断查询
+                            if (first) {
+                                get(1, 10);
+                            } else if (!first) {
+                                get(obj.curr, obj.limit);
+                            }
+                            console.log(obj)
+                        }
+                    });
+
+                });
+            },
+            error: function (ex) {
+                alert(ex.responseText);
+            }
+        })
+    };
+
+    //删除
+    function deletes(shu) {
+        if (confirm('确定删除吗？')) {
+            var name = document.getElementById("tab").getElementsByTagName("tr")[shu + 1].getElementsByTagName("td")[1].innerHTML;
+            $.ajax({
+                type: "post",
+                data: "{CompanyNum:'" + name + "'}",
+                contentType: "application/json",
+                dataType: "json",
+                url: "/SZH/DeleteDanWei",
+                success: function (result) {
+                    alert(result);
+                    Set();
+                },
+                error: function (res) {
+                    alert(res.responseText);
+                }
+            })
+        }
+    }
+
+    function insert() {
+        var CompanyName = document.getElementById("CompanyName").value;
+        if (CompanyName == "") {
+            alert("请将单位名称进行填写");
+        } else {
+            $.ajax({
+                type: "post",
+                data: "{CompanyName:'" + CompanyName+ "'}",
+                contentType: "application/json",
+                dataType: "json",
+                url: "/SZH/AddDanWei",
+                success: function (result) {
+                    alert(result);
+                    Set();
+                    document.getElementById("CompanyName").value = "";
+                    $('#myModal').modal('hide');
+                },
+                error: function (res) {
+                    alert(res.responseText);
+                }
+            })
+        }
+    }
+    //查询一条数据
+    function SelectOne(shu) {
+        var name = document.getElementById("tab").getElementsByTagName("tr")[shu + 1].getElementsByTagName("td")[1].innerHTML;
+        $.ajax({
+            type: "post",
+            data: "{CompanyNum:'" + name + "'}",
+            contentType: "application/json",
+            dataType: "json",
+            url: "/SZH/SelectOneDanWei",
+            success: function (result) {
+                $.each(result, function (index, data) {
+                    document.getElementById("CompanyNum").value = data.CompanyNum;
+                    document.getElementById("CompanyName_1").value = data.CompanyName;
+                });
+            },
+            error: function (res) {
+                alert(res.responseText);
+            }
+        })
+    }
+
+    function Udapte() {
+        var CompanyNum = document.getElementById("CompanyNum").value;
+        var CompanyName = document.getElementById("CompanyName_1").value;
+        if (CompanyName == "") {
+            alert("请将类别名称进行填写");
+        } else {
+            $.ajax({
+                type: "post",
+                data: "{CompanyNum:'" + CompanyNum + "',CompanyName:'" + CompanyName + "'}",
+                contentType: "application/json",
+                dataType: "json",
+                url: "/SZH/UdapteDanWei",
+                success: function (result) {
+                    alert(result);
+                    Set();
+                    $('#myModal_1').modal('hide');
+                },
+                error: function (res) {
+                    alert(res.responseText);
+                }
+            })
+        }
+    }
+</script>

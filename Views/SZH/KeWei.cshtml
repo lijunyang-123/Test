@@ -11,6 +11,8 @@
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <link href="~/Scripts/layui.css" rel="stylesheet" />
+    <script src="~/layui-v2.5.7/layui/layui.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
     <title>KeWei</title>
 </head>
 <body style=" margin:auto; width:1100px; margin-top:20px">
@@ -24,10 +26,10 @@
                     <div class="col-md-9">
                         <div class="row">
                             <div class="col-xs-1 col-xs-offset-9">
-                                <a><input type="button" class="layui-btn layui-btn-sm" style="width:60px;" value="新增"></a>
+                                <a><input type="button" class="btn btn-primary btn-sm" style="width:60px;" value="新增" id="y-modalBtnAdd" data-toggle="modal" data-target="#myModal"></a>
                             </div>
                             <div class="col-xs-2">
-                                <a><input type="button" class="layui-btn layui-btn-danger layui-btn-sm" style="width:60px;" value="删除"></a>
+                                <a><input type="button" class="layui-btn layui-btn-danger layui-btn-sm" style="width:60px;" value="删除" onclick="del(this)"></a>
                             </div>
                         </div>
 
@@ -42,40 +44,43 @@
     <div style="">
         @*//搜索*@
         <div style="margin-left:20px">
-            <a style="text-decoration: none ">类别</a>
+            <a style="text-decoration: none ">仓库</a>
+            <select style="width:160px;height:26px" id="CategoryId_1" name="CategoryId">
+                <option value="0">请选择仓库</option>
+                @foreach (var a in ViewBag.gg)
+                {
+                    <option value="@a.warehourseNum">@a.warehourseName</option>
+                }
+            </select>
+            <!--<a style="text-decoration: none ">类别</a>
             <select style="width:160px;height:26px" id="CategoryId" name="CategoryId">
-                <option value="0">请选择</option>
-                @*@foreach (var a in ViewBag.gg)
+                <option value="0">请选择</option>-->
+            @*@foreach (var a in ViewBag.gg)
                 {
                     <option value="@a.warehourseNum">@a.warehourseName</option>
                 }*@
-                <option value="1">正式库区</option>
-                <option value="2w">待入库区</option>
+            <!--<option value="1">正式库区</option>
+                <option value="2">待入库区</option>
                 <option value="3">待检库区</option>
                 <option value="4">待出库区</option>
                 <option value="5">报损库区</option>
 
-            </select>
+            </select>-->
             <a style="text-decoration: none ">库位</a>
-            <input type="text" name="name" placeholder="请输入库位名" width="300" class="layui-text" id="nuname"/>
-            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm layui-btn-normal" style="width:60px; height:28px" onclick="get()">搜索</button>
+            <input type="text" name="name" placeholder="请输入库位名" width="300" class="layui-text" id="nuname" />
+            <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" style="width:60px; height:28px" onclick="Set()">搜索</button>
         </div>
 
-        <div class="layui-form">
-            <table class="layui-table">
-                <colgroup>
-                    <col width="150">
-                    <col width="150">
-                    <col width="200">
-                    <col>
-                </colgroup>
+        <div>
+            <table class="layui-table" id="tab">
                 <thead>
                     <tr>
+                        <td><input type="checkbox" name="name" value="" id="check" /></td>
                         <th>序号</th>
                         <th>库位编号</th>
                         <th>库位名</th>
                         <th>所在仓库</th>
-                        <th>库位类别</th>
+                        @*<th>库位类别</th>*@
                         <th>是否禁用</th>
                         <th>是否默认</th>
                         <th>创建时间</th>
@@ -83,56 +88,457 @@
                     </tr>
                 </thead>
                 <tbody id="tba">
-                    
                 </tbody>
             </table>
         </div>
     </div>
 
-    <div id="demo7"></div>
+    <div id="demo"></div>
+
+
+    @*新增*@
+    <div class="modal fade" id="myModal" data-remote="/home/test">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">添加库位</h4>
+                </div>
+                <div class="modal-body">
+                    <table style="border-collapse:separate; border-spacing:0px 10px;">
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">库位编号</label>
+                            </td>
+                            <td>
+                                <input type="text" name="phone" lay-verify="required" autocomplete="off" class="layui-input" style="height: 36px; width: 460px; margin-left: 15px" placeholder="自动编程，无需输入" readonly="readonly">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">库位名称</label>
+                            </td>
+                            <td>
+                                <input type="text" id="LocationName" name="phone" lay-verify="required" autocomplete="off" class="layui-input" style="height:36px;width:460px;margin-left:15px" placeholder="请输入供应商名称">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">仓库</label>
+                            </td>
+                            <td>
+                                <select style="width:460px;height:36px;margin-left:15px;margin-left:15px" id="warehourseNum" name="warehourseNum" class="layui-select">
+                                    <option value="0">请选择仓库</option>
+                                    @foreach (var a in ViewBag.gg)
+                                    {
+                                        <option value="@a.warehourseNum">@a.warehourseName</option>
+                                    }
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">是否默认</label>
+                            </td>
+                            <td>
+                                <select style="width:460px;height:36px;margin-left:15px;margin-left:15px" id="isDefult" name="isDefult" class="layui-select">
+                                    <option value="0">请选择</option>
+                                    <option value="1">是</option>
+                                    <option value="2">否</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">库位条码</label>
+                            </td>
+                            <td>
+                                <input type="text" name="phone" id="barcode" lay-verify="required" autocomplete="off" class="layui-input" style="height:36px;width:460px;margin-left:15px">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="Insert()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @*修改*@
+    <div class="modal fade" id="myModal_1" data-remote="/home/test">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">修改库位信息</h4>
+                </div>
+                <div class="modal-body">
+                    <table style="border-collapse:separate; border-spacing:0px 10px;">
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">库位编号</label>
+                            </td>
+                            <td>
+                                <input type="text" id="LocationNum_1" name="LocationNum_1" lay-verify="required" autocomplete="off" class="layui-input" style="height: 36px; width: 460px; margin-left: 15px" placeholder="自动编程，无需输入" readonly="readonly">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">库位名称</label>
+                            </td>
+                            <td>
+                                <input type="text" id="LocationName_1" name="phone" lay-verify="required" autocomplete="off" class="layui-input" style="height:36px;width:460px;margin-left:15px" placeholder="请输入供应商名称">
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">仓库</label>
+                            </td>
+                            <td>
+                                <select style="width:460px;height:36px;margin-left:15px;margin-left:15px" id="warehourseNum_1" name="warehourseNum_1" class="layui-select">
+                                    <option value="0">请选择仓库</option>
+                                    @foreach (var a in ViewBag.gg)
+                                    {
+                                        <option value="@a.warehourseNum">@a.warehourseName</option>
+                                    }
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">是否默认</label>
+                            </td>
+                            <td>
+                                <select style="width:460px;height:36px;margin-left:15px;margin-left:15px" id="isDefult_1" name="isDefult_1" class="layui-select">
+                                    <option value="0">请选择</option>
+                                    <option value="1">是</option>
+                                    <option value="2">否</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <label style="font-size:14px">库位条码</label>
+                            </td>
+                            <td>
+                                <input type="text" name="phone" id="barcode_1" lay-verify="required" autocomplete="off" class="layui-input" style="height:36px;width:460px;margin-left:15px">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="update()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
 <script>
     $(function () {
-       // get();
+        Set();
+        get(1, 10);
     });
-    function get() {
+   
+
+    function get(pageIndex, pageSize) {
         //获取下拉索引
-        var index = document.getElementById("CategoryId").selectedIndex;
-        //获取options的值
-        var hhh = document.getElementById("CategoryId").options[index].value;
-        //获取值
-        if (index != 0) {
-            var shu = document.getElementById("CategoryId").options[index].innerHTML;
-        } else{
-            var shu = null;
-        }
-        
+        //var index = document.getElementById("CategoryId").selectedIndex;//类别下拉
+        var wei = document.getElementById("CategoryId_1").selectedIndex;//仓库
+        //获取仓库options的值
+        if (wei != 0) {
+            var hhh = document.getElementById("CategoryId_1").options[wei].value;
+        } else {
+            var hhh = "";
+        };
+        //类别下拉文本值
+        //if (index != 0) {
+        //    var shu = document.getElementById("CategoryId").options[index].innerHTML;
+        //} else{
+        //    var shu = null;
+        //}
         //获取文本值
         var name = document.getElementById("nuname").value;
-        alert(hhh);
-        //$.ajax({
-        //    type: "post",
-        //    contentType: "application/json",
-        //    data: "{pageIndex:" + pageIndex + ",pageSize:" + pageSize + ",warehourseName" + shu + ",}",
-        //    dataType: "json",
-        //    url: "/SZH/GetKu",
-        //    success: function (result) {
-        //        $("#tab tr").remove();
-        //        $.each(result, function (index, data) {
-        //            $("#tab").append(" <thead><tr><td>" +
-        //                data.Id + "</td><td>" +
-        //                data.Title + "</td><td>" +
-        //                data.Author + "</td><td>" +
-        //                data.UnitPrice + "</td><td>" +
-        //                data.Name + "</td><td>" +
-        //                data.PuName + "</td></tr>" +
-        //                "</thead> ");
-        //        })
-        //    },
-        //    error: function (res) {
-        //        alert(res.responseText);
-        //    }
-        //})
+        $.ajax({
+            type: "post",
+            data: "{pageIndex:" + pageIndex + ",pageSize:" + pageSize + ",warehourseNum:'" + hhh + "',LocationName:'" + name + "'}",
+            contentType: "application/json",
+            dataType: "json",
+            url: "/SZH/SelectKeWei",
+            success: function (result) {
+                $("#tba tr").remove();
+                var shu = 0;
+                var tou = 1;
+                $.each(result, function (index, data) {
+                    if (data.isDisable == 1) {
+                        var zzz = "否"; var zi = "禁用";
+                    } else {
+                        var zzz = "是"; var zi = "解锁";
+                    }
+                    if (data.isDefult == 1) {
+                        var sss = "否";
+                    } else {
+                        var sss = "是";
+                    }
+                    $("#tba").append("<tr>" +
+                        " <td><input type='checkbox' name='chk' value='" + data.LocationNum
+                        + "'/></td>" +
+                        "<td>" +
+                       tou + "</td><td>" +
+                        data.LocationNum + "</td><td>" +
+                        data.LocationName + "</td><td>" +
+                        data.warehourseNum + "</td><td>" +
+                       zzz + "</td><td>" +
+                        sss + "</td><td>" +
+                        data.CreateTime + "</td><td>" +
+                        "<button class= 'layui-btn layui-btn-xs' onclick='selectOne(" + shu + ")' data-toggle='modal' data-target='#myModal_1'> 编辑</button>" +
+                        "<button class='layui-btn layui-btn-danger layui-btn-xs' onclick='deletes(" + shu + ")' >删除</button>"
+                        + "<button class='layui-btn layui-btn-warm layui-btn-xs' onclick='JinYong(" + shu + ")'>"+zi+"</button>"
+                        + "</td></tr>");
+                    shu++;
+                    tou++;
+                })
+            },
+            error: function (res) {
+                alert(res.responseText);
+            }
+        })
     }
+    //分页
+    function Set() {
+        //获取文本值
+        //获取下拉索引
+        var wei = document.getElementById("CategoryId_1").selectedIndex;//仓库
+        if (wei != 0) {
+            var hhh = document.getElementById("CategoryId_1").options[wei].value;
+        } else {
+            var hhh = "";
+        };
+        var name = document.getElementById("nuname").value;
+        $.ajax({
+            type: "post",
+            contentType: "application/json",
+            data: "{ warehourseNum:'" + hhh + "',LocationName:'" + name + "'}",
+            dataType: "json",
+            url: "/SZH/SelectKeWeis",
+            success: function (result) {
+                //获取总条数
+                rows = result;
+                layui.use(['laypage', 'layer'], function () {
+                    var laypage = layui.laypage
+                        , layer = layui.layer;
+                    //完整功能
+                    laypage.render({
+                        elem: 'demo',
+                        count: rows,
+                        layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip'],
+                        jump: function (obj, first) {
+                            //判断查询
+                            if (first) {
+                                get(1, 10);
+                            } else if (!first) {
+                                get(obj.curr, obj.limit);
+                            }
+                            console.log(obj)
+                        }
+                    });
+
+                });
+            },
+            error: function (ex) {
+                alert(ex.responseText);
+            }
+        })
+    };
+
+    //删除
+    function deletes(shu) {
+        if (confirm('确定删除吗？')) {
+            var name = document.getElementById("tab").getElementsByTagName("tr")[shu + 1].getElementsByTagName("td")[2].innerHTML;
+            $.ajax({
+                type: "post",
+                data: "{id:'" + name + "'}",
+                contentType: "application/json",
+                dataType: "json",
+                url: "/SZH/DeleteKeWei",
+                success: function (result) {
+                    alert(result);
+                    Set();
+                },
+                error: function (res) {
+                    alert(res.responseText);
+                }
+            })
+        }
+    };
+
+
+
+    //复选框
+    $("#check").click(function () {
+        var cf = $("#check").prop("checked");
+        $("[name=chk]").prop("checked", cf);//prop设置属性值
+    });
+
+
+    //全选删除
+    function del() {
+        if (confirm('确认删除吗？')) {
+            var count = 0;
+            $("input[name='chk']:checked").each(function () {
+                var n = $(this).parents("tr").index();
+                var name = document.getElementById("tab").getElementsByTagName("tr")[n + 1].getElementsByTagName("td")[2].innerHTML;
+                $.ajax({
+                    type: "post",
+                    data: "{id:'" + name + "'}",
+                    contentType: "application/json",
+                    dataType: "json",
+                    url: "/SZH/DeleteKeWeis",
+                    success: function (result) {
+                        Set();
+                    },
+                    error: function (res) {
+                        alert(res.responseText);
+                    },
+                });
+                count++;
+            });
+            if (count > 0) {
+                alert("有" + count + "项数据删除成功！");
+            } else {
+                alert("删除失败！");
+            }
+        }
+    }
+
+//新增
+    function Insert() {
+        var LocationName = document.getElementById("LocationName").value;
+        var barcode = document.getElementById("barcode").value;
+        var index = document.getElementById("warehourseNum").selectedIndex;
+        var warehourseNum = document.getElementById("warehourseNum").options[index].value;
+        var index1 = document.getElementById("isDefult").selectedIndex;
+        var isDefult = document.getElementById("isDefult").options[index1].value;
+        
+        if (LocationName == "" || index == 0 || index1 == 0) {
+            alert("请将有文字说明的必填项进行填写");
+        } else {
+            $.ajax({
+                type: "post",
+                data: "{LocationName:'" + LocationName + "',barcode:'" + barcode + "',warehourseNum:'" + warehourseNum + "',isDefult:" + (isDefult - 1) + "}",
+                contentType: "application/json",
+                dataType: "json",
+                url: "/SZH/InsertKeWei",
+                success: function (result) {
+                    alert(result);
+                    Set();
+                    document.getElementById("LocationName").value = "";
+                    document.getElementById("barcode").value = "";
+                    document.getElementById("warehourseNum").selectedIndex = 0;
+                    
+                    document.getElementById("isDefult").selectedIndex = 0;
+                    $('#myModal').modal('hide');
+                },
+                error: function (res) {
+                    alert(res.responseText);
+                }
+            })
+        }
+    }
+
+    //查询数据
+    function selectOne(shu) {
+        var name = document.getElementById("tab").getElementsByTagName("tr")[shu + 1].getElementsByTagName("td")[2].innerHTML;
+        $.ajax({
+            type: "post",
+            data: "{LocationNum:'" + name + "'}",
+            contentType: "application/json",
+            dataType: "json",
+            url: "/SZH/SelectOneKuWei",
+            success: function (result) {
+              
+                $.each(result, function (index, data) {
+                    document.getElementById("LocationNum_1").value = data.LocationNum;
+                    document.getElementById("LocationName_1").value = data.LocationName;
+                    document.getElementById("barcode_1").value = data.barcode;
+                    document.getElementById("warehourseNum_1").value = data.warehourseNum;
+                    if (document.getElementById("warehourseNum_1").value == "") {
+                        document.getElementById("warehourseNum_1").selectedIndex = 0;
+                    }
+                    document.getElementById("isDefult_1").value = (data.isDefult+1);
+                });
+            },
+            error: function (res) {
+                alert(res.responseText);
+            }
+        })
+    }
+
+
+    //修改
+    function update() {
+        var LocationName = document.getElementById("LocationName_1").value;
+        var barcode = document.getElementById("barcode_1").value;
+        var index = document.getElementById("warehourseNum_1").selectedIndex;
+        var warehourseNum = document.getElementById("warehourseNum_1").options[index].value;
+        var index1 = document.getElementById("isDefult_1").selectedIndex;
+        var isDefult = document.getElementById("isDefult_1").options[index1].value;
+        var id = document.getElementById("LocationNum_1").value;
+        if (LocationName == "" || index == 0 || index1 == 0) {
+            alert("请将有文字说明的必填项进行填写");
+        } else {
+            $.ajax({
+                type: "post",
+                data: "{LocationName:'" + LocationName + "',barcode:'" + barcode + "',warehourseNum:'" + warehourseNum + "',isDefult:" + (isDefult - 1) + ",LocationNum:'"+id+"'}",
+                contentType: "application/json",
+                dataType: "json",
+                url: "/SZH/UdpdateKuWei",
+                success: function (result) {
+                    alert(result);
+                    Set();
+                    $('#myModal_1').modal('hide');
+                },
+                error: function (res) {
+                    alert(res.responseText);
+                }
+            })
+        }
+    }
+
+
+    function JinYong(shu) {
+        var name = document.getElementById("tab").getElementsByTagName("tr")[shu + 1].getElementsByTagName("td")[2].innerHTML;
+        var shu = document.getElementById("tab").getElementsByTagName("tr")[shu + 1].getElementsByTagName("td")[5].innerHTML;
+        if (shu == "是") {
+            var js = 1;
+        } else if(shu =="否"){
+            var js = 0;
+        }
+            $.ajax({
+                type: "post",
+                data: "{id:'" + name + "',shu:"+js+"}",
+                contentType: "application/json",
+                dataType: "json",
+                url: "/SZH/JingYong",
+                success: function (result) {
+                    alert(result);
+                    Set();
+                },
+                error: function (res) {
+                    alert(res.responseText);
+                }
+            })
+    };
 </script>

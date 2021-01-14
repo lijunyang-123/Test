@@ -489,13 +489,15 @@
     <Content Include="Views\XML\Index.cshtml" />
     <Content Include="Views\SZH\KeWei.cshtml" />
     <Content Include="Views\SZH\GongYing.cshtml" />
+    <Content Include="Views\SZH\Product.cshtml" />
+    <Content Include="Views\SZH\KeHu.cshtml" />
+    <Content Include="Views\SZH\LeiBie.cshtml" />
+    <Content Include="Views\SZH\DanWei.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Views\HLL\" />
-    <Folder Include="Views\SZH\" />
-    <Folder Include="Views\XML\" />
     <Folder Include="Views\ZYY\" />
     <Folder Include="仓库\page\table\" />
   </ItemGroup>

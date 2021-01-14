@@ -109,7 +109,7 @@
                                 <label style="font-size:14px">供应商类型</label>
                             </td>
                             <td>
-                                <select style="width:460px;height:36px;margin-left:15px;margin-left:15px" id="CategoryId" name="CategoryId">
+                                <select style="width:460px;height:36px;margin-left:15px;margin-left:15px" id="CategoryId" name="CategoryId" class="layui-select">
                                     <option value="0">请选择</option>
                                     @foreach (var a in ViewBag.gg)
                                     {
@@ -178,7 +178,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" onclick="insert()" data-dismiss="modal">保存</button>
+                    <button type="button" class="btn btn-primary" onclick="insert()">保存</button>
 
                 </div>
 
@@ -224,11 +224,11 @@
                                 <label style="font-size:14px">供应商类型</label>
                             </td>
                             <td>
-                                <select style="width:460px;height:36px;margin-left:15px;margin-left:15px" id="CategoryId_1" name="CategoryId">
+                                <select style="width:460px;height:36px;margin-left:15px;margin-left:15px" id="CategoryId_1" name="CategoryId" class="layui-select">
                                     <option value="0">请选择</option>
                                     @foreach (var a in ViewBag.gg)
                                     {
-                                        <option value="@a.supplierLeixNum">@a.supplierLeixName</option>
+                                        <option value="@a.supplierLeixNum"  id="gbh">@a.supplierLeixName</option>
                                     }
                                 </select>
                             </td>
@@ -293,7 +293,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" onclick="update()" data-dismiss="modal">保存</button>
+                    <button type="button" class="btn btn-primary" onclick="update()">保存</button>
 
                 </div>
 
@@ -399,6 +399,7 @@
                 var contents = document.getElementById("contents").value;
                 var index = document.getElementById("CategoryId").selectedIndex;
                 var supplierLeix = document.getElementById("CategoryId").options[index].value;
+                   
                 if (supplierName == "" || contacts == "" || index == 0 || address == "") {
                     alert("请将有文字说明的必填项进行填写");
                 } else {
@@ -418,7 +419,8 @@
                             document.getElementById("contacts").value = "";
                             document.getElementById("address").value = "";
                             document.getElementById("contents").value = "";
-                            document.getElementById("CategoryId").selectedIndex = "";
+                            document.getElementById("CategoryId").selectedIndex = 0;
+                            $('#myModal').modal('hide');
                         },
                         error: function (res) {
                             alert(res.responseText);
@@ -503,7 +505,10 @@
                     document.getElementById("contacts_1").value = data.contacts;
                     document.getElementById("address_1").value = data.address;
                     document.getElementById("contents_1").value = data.contents;
-                    document.getElementById("CategoryId_1").selectedIndex = 1;
+                    document.getElementById("CategoryId_1").value = data.supplierLeix;
+                    if (document.getElementById("CategoryId_1").value == "") {
+                        document.getElementById("CategoryId_1").selectedIndex = 0;
+                    }
                 });
             },
             error: function (res) {
@@ -537,6 +542,7 @@
                 success: function (result) {
                     alert(result);
                     Set();
+                    $('#myModal_1').modal('hide');
                 },
                 error: function (res) {
                     alert(res.responseText);
