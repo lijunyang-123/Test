@@ -29,12 +29,12 @@ namespace Models
         public string ygName { get; set; }
         public string email { get; set; }
         public string phone { get; set; }
-        public int LoginNum { get; set; }
+        public Nullable<int> LoginNum { get; set; }
         public string BmNum { get; set; }
         public string ZwNum { get; set; }
-        public System.DateTime CreateTime { get; set; }
+        public Nullable<System.DateTime> CreateTime { get; set; }
         public Nullable<System.DateTime> EndTime { get; set; }
-        public int isDel { get; set; }
+        public Nullable<int> isDel { get; set; }
     
         public virtual department department { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

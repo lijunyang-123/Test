@@ -50,11 +50,13 @@
   <ItemGroup>
     <Compile Include="L\RukuService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="X\DepartmentSerivce.cs" />
+    <Compile Include="X\PositionSerivce.cs" />
+    <Compile Include="X\StaffSerivce.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="H\" />
     <Folder Include="S\" />
-    <Folder Include="X\" />
     <Folder Include="Z\" />
   </ItemGroup>
   <ItemGroup>

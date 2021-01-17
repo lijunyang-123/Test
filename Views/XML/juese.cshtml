@@ -1,0 +1,393 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>角色管理</title>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        #ta1 tr td {
+            padding: 10px 10px 20px 0px;
+        }
+    </style>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/layui-v2.5.7/layui/layui.js"></script>
+    <link href="~/layui-v2.5.7/layui/css/layui.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</head>
+<body>
+    <div>
+        <div style="margin:20px 0px 0px 0px;">
+            <i style="font-style:normal;margin:0px 0px 0px 30px;font-size:20px;">角色管理</i>
+            <div style="margin:20px 0px 0px 30px;">
+                <input type="text" placeholder="请输入角色编号或角色名称" style="width:250px;height:25px;" id="jsName">
+                <input type="button" value="搜索" class="layui-btn layui-btn-sm layui-btn-normal" id="jsQuery">
+                <div style="display:inline-block; position:absolute;right:100px;">
+                    <input type="button" value="新增" class="layui-btn" data-toggle="modal" data-target="#myModal">
+                    <input type="button" value="删除" class="layui-btn" onclick="jsDels()">
+                </div>
+            </div>
+        </div>
+        <div style="margin:30px 0px 0px 0px;">
+            <table class="layui-table" id="t_1">
+                <thead>
+                    <tr class="widget-title" style="">
+                        <th style="width: 8px;"><input type="checkbox" class="group-checkable" id="check" /></th>
+                        <th class="hidden-480">角色编号</th>
+                        <th class="hidden-480">角色名</th>
+                        <th class="hidden-480">创建时间</th>
+                        <th class="hidden-480">备注</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="jsInfo">
+                </tbody>
+            </table>
+            <div id="demo7">
+
+            </div>
+        </div>
+    </div>
+
+    <!--新增页面-->
+    <div class="modal fade" id="myModal" data-remote="/home/test">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">新增角色</h4>
+                </div>
+                <div class="modal-body" style="height:130px;">
+                    <table id="ta1" border="0" style="margin:0px auto;">
+                        <tr>
+                            <td>角色编号</td>
+                            <td>
+                                <input type="text" id="txtjsNum">
+                            </td>
+                            <td>角色名称</td>
+                            <td>
+                                <input type="text" id="txtjsName">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>创建时间</td>
+                            <td>
+                                <input type="text" id="txtjstime">
+                            </td>
+                            <td>备注</td>
+                            <td>
+                                <input type="text" id="beizhu">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" id="addInfo">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--修改页面-->
+    <div class="modal fade" id="myUpdate" data-remote="/home/test">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">编辑角色</h4>
+                </div>
+                <div class="modal-body" style="height:130px;">
+                    <table id="ta1" border="0" style="margin:0px auto;">
+                        <tr>
+                            <td>角色编号</td>
+                            <td>
+                                <input type="text" id="txtjsNum_1" disabled>
+                            </td>
+                            <td>角色名称</td>
+                            <td>
+                                <input type="text" id="txtjsName_1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>创建时间</td>
+                            <td>
+                                <input type="text" id="txtjstime_1">
+                            </td>
+                            <td>备注</td>
+                            <td>
+                                <input type="text" id="beizhu_1">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="PosiUpdate()">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    $(function () {
+        fenye(1, 10);
+        getrows();
+    });
+    var pageCount = 0;
+    var rows = 0;
+
+    function time(op) {
+        var date = new Date(parseInt(op.substr(6)));
+        return date.toLocaleDateString();
+    }
+
+    //查询
+    function fenye(pindex, psize) {
+        $.ajax({
+            type: "post",
+            url: "/XML/jsAll",
+            data: "{pageIndex:" + pindex + ",pagesize:" + psize + "}",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                pageCount = result.PageCount;
+                $("#jsInfo tr").remove();
+                $.each(result.Datalist, function (index, data) {
+                    var shu = 0;
+                    $("#jsInfo").append("<tr><td><input name='chk' type='checkbox'/></td><td>" + data.ZwNum + "</td><td>" + data.ZwName + "</td><td>" + time(data.CreateTime) + "</td><td>" + data.title + "</td><td><a class='layui-btn layui-btn-primary layui-btn-sm'  onclick='return jsDel(&quot;" + data.ZwNum + "&quot;)'>删除</a><a class='layui-btn layui-btn-primary layui-btn-sm'  data-toggle='modal' data-target='#myUpdate' onclick='ById(&quot;" + data.ZwNum+ "&quot;)'>修改</a></td><tr>");
+                });
+            },
+            error: function (ex) {
+                alert("Error" + ex.responseText);
+            }
+        });
+    }
+    //总条数
+    function getrows() {
+        $.ajax({
+            type: "post",
+            url: "/XML/jsRow",
+            data: "{}",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                //获取总条数；
+                rows = result;
+                layui.use(['laypage', 'layer'], function () {
+                    var laypage = layui.laypage
+                        , layer = layui.layer;
+
+                    //完整功能版
+                    laypage.render({
+                        elem: 'demo7'
+                        , count: rows
+                        , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+                        , jump: function (obj, frist) {
+                            if (!frist) {
+                                //调用自己分页的方法
+                                fenye(obj.curr, obj.limit);
+                            }
+                        }
+                    });
+                });
+            },
+            error: function (ex) {
+                alert("Error" + ex.responseText);
+            }
+        });
+    }
+
+    //根据角色编号或角色名称进行查询
+    $("#jsQuery").click(function () {
+
+        //判断文本框是否为空
+        if ($("#jsName").val() == "") {
+            fenye(1, 10);
+            return;
+        }
+
+        $.ajax({
+            type: "post",
+            url: "/XML/queryByjsName",
+            data: "{pageIndex:" + 1 + ",pagesize:" + 10 + ",jsName:'" + $("#jsName").val() + "',jsNum:'" + $("#jsName").val() + "'}",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                $("#jsInfo tr").remove();
+                $.each(result.Datalist, function (index, data) {
+                    $("#jsInfo").append("<tr><td><input id='chk' type='checkbox'/></td><td>" + data.ZwNum + "</td><td>" + data.ZwName + "</td><td>" + data.CreateTime + "</td><td>" + data.title + "</td><td><a class='layui-btn layui-btn-primary layui-btn-sm' onclick='return jsDel(&quot;" + data.ZwNum + "&quot;)'>删除</a><a class='layui-btn layui-btn-primary layui-btn-sm' data-toggle='modal' data-target='#myUpdate' onclick='ById(&quot;" + data.ZwNum + "&quot;)'>修改</a></td><tr>");
+                });
+            },
+            error: function (ex) {
+                alert("Error" + ex.responseText);
+            }
+        });
+    });
+
+
+    //复选框全选
+    $("#check").click(function () {
+        var cf = $("#check").prop("checked");
+        $("[name=chk]").prop("checked", cf);//prop设置属性值
+    });
+
+    //新增弹出框
+    $("#btnAdd").click(function () {
+        $("#di").show();
+    });
+
+    //关闭新增弹出框
+    $("#close").click(function () {
+        $("#di").hide();
+    });
+
+    //新增
+    $("#addInfo").click(function () {
+        $.ajax({
+            type: "POST",//提交方式
+            url: "/XML/jsAdd",//请求的URL路径
+            data: "{po:{ZwNum:'" + $("#txtjsNum").val() + "',ZwName:'" + $("#txtjsName").val() + "',CreateTime:'" + $("#txtjstime").val() + "',title:'" + $("#beizhu").val() + "',isDel:'" + 1 + "'}}",//向服务器传递的参数
+            dataType: "json",//预期服务器返回的数据类型
+            contentType: "application/json",//发送信息至服务器时内容编码类型
+            //请求成功后的回调函数
+            success: function (result) {
+                if (result > 0) {
+                    alert("新增成功");
+                    fenye(1, 10);
+                    getrows();
+                } else {
+                    alert("新增失败");
+                }
+            },
+            error: function (ex) {
+                alert("Error:" + ex.responseText);
+            }
+        });
+    });
+
+    //单个删除
+    function jsDel(zwNumber) {
+        if (confirm('确定删除吗？')) {
+            $.ajax({
+                type: "post",
+                data: "{zwNumber:'" + zwNumber + "'}",
+                contentType: "application/json",
+                dataType: "json",
+                url: "/XML/jsDel",
+                success: function (result) {
+                    if (result > 0) {
+                        fenye(1, 10);
+                        alert("删除成功");
+                    } else {
+                        alert("删除失败");
+                    }
+                },
+                error: function (res) {
+                    alert(res.responseText);
+                }
+            })
+        }
+    }
+
+    //多个删除
+    function jsDels() {
+        if ($("input[name='chk']:checked").length > 0) {
+            if (confirm('确认删除吗？')) {
+                var count = 0;
+                $("input[name='chk']:checked").each(function () {
+                    var n = $(this).parents("tr").index();
+                    var name = document.getElementById("t_1").getElementsByTagName("tr")[n + 1].getElementsByTagName("td")[1].innerHTML;
+                    $.ajax({
+                        type: "post",
+                        data: "{zwNumber:'" + name + "'}",
+                        contentType: "application/json",
+                        dataType: "json",
+                        url: "/XML/jsDel",
+                        success: function (result) {
+                            fenye(1, 10);
+                        },
+                        error: function (res) {
+                            alert(res.responseText);
+                        },
+                    });
+                    count++;
+                });
+                if (count > 0) {
+                    alert("有" + count + "项数据删除成功！");
+                } else {
+                    alert("删除失败！");
+                }
+            }
+        } else {
+            alert("请选中要删除的行");
+        }
+    }
+
+    //根据角色编号进行查询
+    function ById(ZwNumber) {
+        $.ajax({
+            type: "post",
+            url: "/XML/GetByjsId",
+            data: "{ZwNumber:'" + ZwNumber + "'}",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                $("#txtjsNum_1").val(result[0].ZwNum);
+                $("#txtjsName_1").val(result[0].ZwName);
+                var zwtime = time(result[0].CreateTime);
+                $("#txtjstime_1").val(zwtime);
+                $("#beizhu_1").val(result[0].title);
+            },
+            error: function (ex) {
+                alert("Error" + ex.responseText);
+            }
+        });
+    }
+
+    //修改
+    function PosiUpdate() {
+        var zwbh = $("#txtjsNum_1").val();
+        var zwxm = $("#txtjsName_1").val();
+        var time = $("#txtjstime_1").val();
+        var bz = $("#beizhu_1").val();
+        $.ajax({
+            type: "post",
+            data: "{po:{ZwNum:'" + zwbh + "',ZwName:'" + zwxm + "',CreateTime:'" + time + "',title:'" + bz+"'}}",
+            contentType: "application/json",
+            dataType: "json",
+            url: "/XML/PosiUp",
+            success: function (result) {
+                if (result > 0) {
+                    alert("修改成功");
+                    fenye(1, 10);
+                } else {
+                    alert("修改失败");
+                }
+            },
+            error: function (res) {
+                alert(res.responseText);
+            }
+        })
+    }
+</script>

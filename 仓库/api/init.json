@@ -23,25 +23,19 @@
           "child": [
             {
               "title": "员工管理",
-              "href": "page/welcome-1.html",
+              "href": "/XML/Index",
               "icon": "fa fa-gear",
               "target": "_self"
             },
             {
               "title": "角色管理",
-              "href": "page/welcome-2.html",
+              "href": "/XML/juese",
               "icon": "fa fa-gear",
               "target": "_self"
             },
             {
               "title": "部门管理",
-              "href": "page/welcome-3.html",
-              "icon": "fa fa-gear",
-              "target": "_self"
-            },
-            {
-              "title": "菜单管理",
-              "href": "",
+              "href": "/XML/bumen",
               "icon": "fa fa-gear",
               "target": "_self"
             }

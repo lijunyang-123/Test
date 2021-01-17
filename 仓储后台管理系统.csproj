@@ -483,6 +483,8 @@
     <Content Include="Views\LJY\Main.cshtml" />
     <Content Include="Views\LJY\Ruku.cshtml" />
     <Content Include="Views\XML\Index.cshtml" />
+    <Content Include="Views\XML\juese.cshtml" />
+    <Content Include="Views\XML\bumen.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -43,11 +43,13 @@
   <ItemGroup>
     <Compile Include="L\RuluManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="X\DepartmentManager.cs" />
+    <Compile Include="X\PositionManager.cs" />
+    <Compile Include="X\StaffManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="H\" />
     <Folder Include="S\" />
-    <Folder Include="X\" />
     <Folder Include="Z\" />
   </ItemGroup>
   <ItemGroup>

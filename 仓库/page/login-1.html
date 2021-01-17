@@ -41,24 +41,24 @@
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-username" for="username"></label>
-                    <input type="text" name="username" lay-verify="required|account" placeholder="用户名或者邮箱" autocomplete="off" class="layui-input" value="admin">
+                    <input type="text" id="username" lay-verify="required|account" placeholder="用户名或者邮箱" autocomplete="off" class="layui-input" value="xixi">
                 </div>
                 <div class="layui-form-item">
                     <label class="layui-icon layui-icon-password" for="password"></label>
-                    <input type="password" name="password" lay-verify="required|password" placeholder="密码" autocomplete="off" class="layui-input" value="123456">
+                    <input type="password" id="password" lay-verify="required|password" placeholder="密码" autocomplete="off" class="layui-input" value="123">
                 </div>
-                <div class="layui-form-item">
+                <!--<div class="layui-form-item">
                     <label class="layui-icon layui-icon-vercode" for="captcha"></label>
                     <input type="text" name="captcha" lay-verify="required|captcha" placeholder="图形验证码" autocomplete="off" class="layui-input verification captcha" value="xszg">
                     <div class="captcha-img">
                         <img id="captchaPic" src="../images/captcha.jpg">
                     </div>
-                </div>
-                <div class="layui-form-item">
+                </div>-->
+                <!--<div class="layui-form-item">
                     <input type="checkbox" name="rememberMe" value="true" lay-skin="primary" title="记住密码">
-                </div>
+                </div>-->
                 <div class="layui-form-item">
-                    <button class="layui-btn layui-btn layui-btn-normal layui-btn-fluid" lay-submit="" lay-filter="login" style="background-color:gray;">登 入</button>
+                    <button class="layui-btn layui-btn layui-btn-normal layui-btn-fluid" lay-submit="" lay-filter="login" style="background-color:gray;" id="denglu">登 入</button>
                 </div>
             </form>
         </div>
@@ -84,24 +84,48 @@
         });
 
         // 进行登录操作
-        form.on('submit(login)', function (data) {
-            data = data.field;
-            if (data.username == '') {
-                layer.msg('用户名不能为空');
-                return false;
+        //form.on('submit(login)', function (data) {
+        //    data = data.field;
+        //    if (data.username == '') {
+        //        layer.msg('用户名不能为空');
+        //        return false;
+        //    }
+        //    if (data.password == '') {
+        //        layer.msg('密码不能为空');
+        //        return false;
+        //    }
+        //    if (data.captcha == '') {
+        //        layer.msg('验证码不能为空');
+        //        return false;
+        //    }
+        //    layer.msg('登录成功', function () {
+        //        window.location =  /index.html';
+        //    });
+        //    return false;
+        //});
+    });
+
+    $(function () {
+        
+    });
+
+    $("#denglu").click(function () {
+        $.ajax({
+            type: "post",
+            url: "/XML/login",
+            data: "{name:'" + $("#username").val() + "',pwd:'" + $("#password").val() + "'}",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                if (result > 0) {
+                    alert("登录成功", location.href="/仓库/index.html");
+                } else {
+                    alert("登录失败");
+                }
+            },
+            error: function (ex) {
+                alert("Error" + ex.responseText);
             }
-            if (data.password == '') {
-                layer.msg('密码不能为空');
-                return false;
-            }
-            if (data.captcha == '') {
-                layer.msg('验证码不能为空');
-                return false;
-            }
-            layer.msg('登录成功', function () {
-                window.location =  /index.html';
-            });
-            return false;
         });
     });
 </script>

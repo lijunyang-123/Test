@@ -1,0 +1,394 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>部门管理</title>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        #ta1 tr td {
+            padding:10px 10px 20px 0px;
+        }
+    </style>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/layui-v2.5.7/layui/layui.js"></script>
+    <link href="~/layui-v2.5.7/layui/css/layui.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</head>
+<body>
+    <div>
+        <div style="margin:20px 0px 0px 0px;">
+            <i style="font-style:normal;margin:0px 0px 0px 30px;font-size:20px;">部门管理</i>
+            <div style="margin:20px 0px 0px 30px;">
+                <input type="text" placeholder="请输入部门编号或部门名称" style="width:250px;height:25px;" id="bmName">
+                <input type="button" value="搜索" class="layui-btn layui-btn-sm layui-btn-normal" id="bmQuery">
+                <div style="display:inline-block; position:absolute;right:100px;">
+                    <input type="button" value="新增" class="layui-btn" data-toggle="modal" data-target="#myModal">
+                    <input type="button" value="删除" class="layui-btn" onclick="bmDels()">
+                </div>
+            </div>
+        </div>
+        <div style="margin:30px 0px 0px 0px;">
+            <table class="layui-table" id="t_1">
+                <thead>
+                    <tr class="widget-title" style="">
+                        <th style="width: 8px;"><input type="checkbox" class="group-checkable" id="check" /></th>
+                        <th class="hidden-480">部门编号</th>
+                        <th class="hidden-480">部门名</th>
+                        <th class="hidden-480">创建时间</th>
+                        <th class="hidden-480">备注</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="bmInfo">
+                </tbody>
+            </table>
+            <div id="demo7">
+
+            </div>
+        </div>
+    </div>
+
+    <!--新增页面-->
+    <div class="modal fade" id="myModal" data-remote="/home/test">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">新增部门</h4>
+                </div>
+                <div class="modal-body" style="height:130px;">
+                    <table id="ta1" border="0" style="margin:-15px 20px 0px 0px;">
+                        <tr style="position:relative;left:10px;display:inline-block;top:20px;">
+                            <td>部门编号&nbsp;</td>
+                            <td>
+                                <input type="text" id="txtbmNum">
+                            </td>
+                            <td>&nbsp;部门名称&nbsp;</td>
+                            <td>
+                                <input type="text" id="txtbmName">
+                            </td>
+                        </tr>
+                        <tr style="position:relative;left:10px;display:inline-block;top:20px;">
+                            <td>创建时间&nbsp;</td>
+                            <td>
+                                <input type="text" id="txtbmtime">
+                            </td>
+                            <td>&nbsp;备注&nbsp;</td>
+                            <td>
+                                <input type="text" id="txtbeizhu">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" id="addInfo">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--修改页面-->
+    <div class="modal fade" id="myUpdate" data-remote="/home/test">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">编辑部门</h4>
+                </div>
+                <div class="modal-body" style="height:130px;">
+                    <table id="ta1" border="0" style="margin:-15px 20px 0px 0px;">
+                        <tr style="position:relative;left:10px;display:inline-block;top:20px;">
+                            <td>部门编号&nbsp;</td>
+                            <td>
+                                <input type="text" id="txtbmNum_1" disabled>
+                            </td>
+                            <td>&nbsp;部门名称&nbsp;</td>
+                            <td>
+                                <input type="text" id="txtbmName_1">
+                            </td>
+                        </tr>
+                        <tr style="position:relative;left:10px;display:inline-block;top:20px;">
+                            <td>创建时间&nbsp;</td>
+                            <td>
+                                <input type="text" id="txtbmtime_1">
+                            </td>
+                            <td>&nbsp;备注&nbsp;</td>
+                            <td>
+                                <input type="text" id="txtbeizhu_1">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="DepUpdate()">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    $(function () {
+        fenye(1, 10);
+
+        getrows();
+    });
+    var pageCount = 0;
+    var rows = 0;
+
+    function time(op) {
+        var date = new Date(parseInt(op.substr(6)));
+        return date.toLocaleDateString();
+    }
+
+    //查询
+    function fenye(pindex, psize) {
+        $.ajax({
+            type: "post",
+            url: "/XML/bmAll",
+            data: "{pageIndex:" + pindex + ",pagesize:" + psize + "}",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                pageCount = result.PageCount;
+                $("#bmInfo tr").remove();
+                $.each(result.Datalist, function (index, data) {
+                    $("#bmInfo").append("<tr><td><input name='chk' type='checkbox'/></td><td>" + data.BmNum + "</td><td>" + data.BmName + "</td><td>" + time(data.createTime) + "</td><td>" + data.title + "</td><td><a class='layui-btn layui-btn-primary layui-btn-sm' onclick='return bmDel(&quot;" + data.BmNum + "&quot;)'>删除</a><a class='layui-btn layui-btn-primary layui-btn-sm' data-toggle='modal' data-target='#myUpdate' onclick='ById(&quot;" + data.BmNum+"&quot;)'>修改</a></td><tr>");
+                });
+            },
+            error: function (ex) {
+                alert("Error" + ex.responseText);
+            }
+        });
+    }
+
+    //总条数
+    function getrows() {
+        $.ajax({
+            type: "post",
+            url: "/XML/bmRow",
+            data: "{}",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                //获取总条数；
+                rows = result;
+                layui.use(['laypage', 'layer'], function () {
+                    var laypage = layui.laypage
+                        , layer = layui.layer;
+
+                    //完整功能版
+                    laypage.render({
+                        elem: 'demo7'
+                        , count: rows
+                        , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+                        , jump: function (obj, frist) {
+                            if (!frist) {
+                                //调用自己分页的方法
+                                fenye(obj.curr, obj.limit);
+                            }
+                        }
+                    });
+                });
+            },
+            error: function (ex) {
+                alert("Error" + ex.responseText);
+            }
+        });
+    }
+
+
+    //根据部门编号或部门名称进行查询
+    $("#bmQuery").click(function () {
+
+        //判断文本框是否为空
+        if ($("#bmName").val()=="") {
+            fenye(1,10);
+            return;
+        } 
+
+        $.ajax({
+            type: "post",
+            url: "/XML/queryBybmName",
+            data: "{pageIndex:" + 1 + ",pagesize:" + 10 + ",bmName:'" + $("#bmName").val() + "',bmNum:'" + $("#bmName").val() + "'}",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                $("#bmInfo tr").remove();
+                $.each(result.Datalist, function (index, data) {
+                    $("#bmInfo").append("<tr><td><input id='Checkbox1' type='checkbox'/></td><td>" + data.BmNum + "</td><td>" + data.BmName + "</td><td>" + data.createTime + "</td><td>" + data.title + "</td><td><a class='layui-btn layui-btn-primary layui-btn-sm'>删除</a><a class='layui-btn layui-btn-primary layui-btn-sm' data-toggle='modal' data-target='#myUpdate'>修改</a></td><tr>");
+               });
+            },
+            error: function (ex) {
+                alert("Error" + ex.responseText);
+            }
+        });
+    });
+
+    //复选框全选
+    $("#check").click(function () {
+        var cf = $("#check").prop("checked");
+        $("[name=chk]").prop("checked", cf);//prop设置属性值
+    });
+
+    //新增弹出框
+    $("#btnAdd").click(function () {
+        $("#di").show();
+    });
+
+    //关闭新增弹出框
+    $("#close").click(function () {
+        $("#di").hide();
+    });
+
+    //新增
+    $("#addInfo").click(function () {
+        $.ajax({
+            type: "POST",//提交方式
+            url: "/XML/bmAdd",//请求的URL路径
+            data: "{dep:{BmNum:'" + $("#txtbmNum").val() + "',BmName:'" + $("#txtbmName").val() + "',createTime:'" + $("#txtbmtime").val() + "',title:'" + $("#txtbeizhu").val() + "'}}",//向服务器传递的参数
+            dataType: "json",//预期服务器返回的数据类型
+            contentType: "application/json",//发送信息至服务器时内容编码类型
+            //请求成功后的回调函数
+            success: function (result) {
+                if (result > 0) {
+                    alert("新增成功");
+                    fenye(1, 10);
+                    getrows();
+                } else {
+                    alert("新增失败");
+                }
+            },
+            error: function (ex) {
+                alert("Error:" + ex.responseText);
+            }
+        });
+    });
+
+    //单个删除
+    function bmDel(bmNumber) {
+        if (confirm('确定删除吗？')) {
+            $.ajax({
+                type: "post",
+                data: "{bmNumber:'" + bmNumber + "'}",
+                contentType: "application/json",
+                dataType: "json",
+                url: "/XML/bmDel",
+                success: function (result) {
+                    if (result > 0) {
+                        fenye(1, 10);
+                        alert("删除成功");
+                    } else {
+                        alert("删除失败");
+                    }
+                },
+                error: function (res) {
+                    alert(res.responseText);
+                }
+            })
+        }
+    }
+
+    //多个删除
+    function bmDels() {
+        if ($("input[name='chk']:checked").length > 0) {
+            if (confirm('确认删除吗？')) {
+                var count = 0;
+                $("input[name='chk']:checked").each(function () {
+                    var n = $(this).parents("tr").index();
+                    var name = document.getElementById("t_1").getElementsByTagName("tr")[n + 1].getElementsByTagName("td")[1].innerHTML;
+                    $.ajax({
+                        type: "post",
+                        data: "{bmNumber:'" + name + "'}",
+                        contentType: "application/json",
+                        dataType: "json",
+                        url: "/XML/bmDel",
+                        success: function (result) {
+                            fenye(1, 10);
+                        },
+                        error: function (res) {
+                            alert(res.responseText);
+                        },
+                    });
+                    count++;
+                });
+                if (count > 0) {
+                    alert("有" + count + "项数据删除成功！");
+                } else {
+                    alert("删除失败！");
+                }
+            }
+        } else {
+            alert("请选中要删除的行");
+        }
+    }
+
+    //根据部门编号进行查询
+    function ById(BmNum) {
+        $.ajax({
+            type: "post",
+            url: "/XML/GetBybmId",
+            data: "{BmNum:'" + BmNum + "'}",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                $("#txtbmNum_1").val(result[0].BmNum);
+                $("#txtbmName_1").val(result[0].BmName);
+                var zwtime = time(result[0].createTime);
+                $("#txtbmtime_1").val(zwtime);
+                $("#txtbeizhu_1").val(result[0].title);
+            },
+            error: function (ex) {
+                alert("Error" + ex.responseText);
+            }
+        });
+    }
+
+    //修改
+    function DepUpdate() {
+        var bmbh = $("#txtbmNum_1").val();
+        var bmxm = $("#txtbmName_1").val();
+        var time = $("#txtbmtime_1").val();
+        var bz = $("#txtbeizhu_1").val();
+        $.ajax({
+            type: "post",
+            data: "{de:{BmNum:'" + bmbh + "',BmName:'" + bmxm + "',createTime:'" + time + "',title:'" + bz + "'}}",
+            contentType: "application/json",
+            dataType: "json",
+            url: "/XML/DepUp",
+            success: function (result) {
+                if (result > 0) {
+                    alert("修改成功");
+                    fenye(1, 10);
+                } else {
+                    alert("修改失败");
+                }
+            },
+            error: function (res) {
+                alert(res.responseText);
+            }
+        })
+    }
+</script>

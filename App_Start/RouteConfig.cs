@@ -16,7 +16,7 @@ namespace 仓储后台管理系统
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "LJY", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "XML", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

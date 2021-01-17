@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CKSJKModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CKSJKModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Company">
           <Key>
             <PropertyRef Name="CompanyNum" />
@@ -211,12 +211,12 @@
           <Property Name="ygName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="email" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="phone" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="LoginNum" Type="int" Nullable="false" />
+          <Property Name="LoginNum" Type="int" />
           <Property Name="BmNum" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ZwNum" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" />
           <Property Name="EndTime" Type="datetime" />
-          <Property Name="isDel" Type="int" Nullable="false" />
+          <Property Name="isDel" Type="int" />
         </EntityType>
         <EntityType Name="supplier">
           <Key>
@@ -798,8 +798,7 @@
             <End Role="Staff" EntitySet="Staff" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CKSJKModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -1053,12 +1052,12 @@
           <Property Name="ygName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LoginNum" Type="Int32" Nullable="false" />
+          <Property Name="LoginNum" Type="Int32" />
           <Property Name="BmNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ZwNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
           <Property Name="EndTime" Type="DateTime" Precision="3" />
-          <Property Name="isDel" Type="Int32" Nullable="false" />
+          <Property Name="isDel" Type="Int32" />
           <NavigationProperty Name="department" Relationship="Self.员工表关联部门表" FromRole="Staff" ToRole="department" />
           <NavigationProperty Name="LossReport" Relationship="Self.报损单关联员工" FromRole="Staff" ToRole="LossReport" />
           <NavigationProperty Name="outWarehourse" Relationship="Self.出库单关联员工" FromRole="Staff" ToRole="outWarehourse" />
