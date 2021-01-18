@@ -43,43 +43,43 @@
         },
         {
           "title": "基本资料",
-          "href": "page/menu.html",
+          "href": "",
           "icon": "fa fa-clipboard",
           "target": "_self",
           "child": [
             {
               "title": "库位管理",
-              "href": "",
+              "href": "/SZH/KeWei",
               "icon": "fa fa-asterisk",
               "target": "_self"
             },
             {
               "title": "供应商管理",
-              "href": "",
+              "href": "/SZH/GongYing",
               "icon": "fa fa-asterisk",
               "target": "_self"
             },
             {
               "title": "客户管理",
-              "href": "",
+              "href": "/SZH/KeHu",
               "icon": "fa fa-asterisk",
               "target": "_self"
             },
             {
               "title": "计量单位",
-              "href": "",
+              "href": "/SZH/DanWei",
               "icon": "fa fa-asterisk",
               "target": "_self"
             },
             {
               "title": "产品类别",
-              "href": "",
+              "href": "/SZH/LeiBie",
               "icon": "fa fa-asterisk",
               "target": "_self"
             },
             {
               "title": "产品管理",
-              "href": "",
+              "href": "/SZH/Product",
               "icon": "fa fa-asterisk",
               "target": "_self"
             }
