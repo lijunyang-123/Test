@@ -8,10 +8,525 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
+    <title>员工管理</title>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        #ta1 tr td {
+            padding: 10px 10px 20px 0px;
+        }
+    </style>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/layui-v2.5.7/layui/layui.js"></script>
+    <link href="~/layui-v2.5.7/layui/css/layui.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
 </head>
 <body>
-    <div> 
+    <div>
+        <div style="margin:20px 0px 0px 0px;">
+            <i style="font-style:normal;margin:0px 0px 0px 30px;font-size:20px;">用户管理</i>
+            <div style="margin:20px 0px 0px 30px;">
+                <input type="text" placeholder="请输入用户名或者编号" style="width:250px;height:25px;" id="username">
+                <input type="button" value="搜索" class="layui-btn layui-btn-sm layui-btn-normal" id="queryByName">
+                <div style="display:inline-block; position:absolute;right:100px;">
+                    <input type="button" value="新增" class="layui-btn" data-toggle="modal" data-target="#myModal">
+                    <input type="button" value="删除" class="layui-btn" onclick="ygDels()">
+                </div>
+            </div>
+        </div>
+        <div style="margin:30px 0px 0px 0px;">
+            <table class="layui-table" id="t_1">
+                <thead>
+                    <tr class="widget-title" style="">
+                        <th style="width: 8px;"><input type="checkbox" class="group-checkable" id="check" /></th>
+                        <th class="hidden-480">用户名</th>
+                        <th class="hidden-480">编号</th>
+                        <th class="hidden-480">真名</th>
+                        <th class="hidden-480">Email</th>
+                        <th class="hidden-480">联系方式</th>
+                        <th class="hidden-480">登录次数</th>
+                        <th class="hidden-480">部门</th>
+                        <th class="hidden-480">角色</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody id="StaffInfo">
+                </tbody>
+            </table>
+            <div id="demo7">
+
+            </div>
+        </div>
+    </div>
+    <!--新增页面-->
+    <div class="modal fade" id="myModal" data-remote="/home/test">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">新增用户</h4>
+                </div>
+                <div class="modal-body" style="height:250px;">
+                    <table id="ta1" border="0" style="margin:0px auto;">
+                        <tr>
+                            <td>用户编号</td>
+                            <td>
+                                <input type="text" id="txtygNum">
+                            </td>
+                            <td>用户名</td>
+                            <td>
+                                <input type="text" id="txtUserName">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>密码</td>
+                            <td>
+                                <input type="text" id="txtpwd">
+                            </td>
+                            <td>真名</td>
+                            <td>
+                                <input type="text" id="txtygName">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>
+                                <input type="text" id="txtEmail">
+                            </td>
+                            <td>手机号</td>
+                            <td>
+                                <input type="text" id="txtphone">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>部门</td>
+                            <td>
+                                <select style="width:174px;" id="bm">
+                                    <option>请选择部门</option>
+                                </select>
+                            </td>
+                            <td>角色</td>
+                            <td>
+                                <select style="width:174px;" id="js">
+                                    <option>请选择角色</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" id="addInfo">提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--修改页面-->
+    <div class="modal fade" id="myUpdate" data-remote="/home/test">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        &times;
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">编辑用户</h4>
+                </div>
+                <div class="modal-body" style="height:250px;">
+                    <table id="ta1" border="0" style="margin:0px auto;">
+                        <tr>
+                            <td>用户编号</td>
+                            <td>
+                                <input type="text" id="txtygNum_1" disabled="disabled">
+                            </td>
+                            <td>用户名</td>
+                            <td>
+                                <input type="text" id="txtUserName_1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>密码</td>
+                            <td>
+                                <input type="text" id="txtpwd_1">
+                            </td>
+                            <td>真名</td>
+                            <td>
+                                <input type="text" id="txtygName_1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td>
+                                <input type="text" id="txtEmail_1">
+                            </td>
+                            <td>联系方式</td>
+                            <td>
+                                <input type="text" id="txtphone_1">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>部门</td>
+                            <td>
+                                <select style="width:174px;" id="bm_1">
+                                </select>
+                            </td>
+                            <td>角色</td>
+                            <td>
+                                <select style="width:174px;" id="js_1" >
+                                </select>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        关闭
+                    </button>
+                    <button type="button" class="btn btn-primary" id="StaEdit" onclick="StaffUp()">提交</button>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
+<script>
+    $(function () {
+        //分页查询所有数据
+        fenye(1, 10);
+
+        //获取数据总条数
+        getrows();
+
+        //绑定部门名称下拉框
+        Bindbmxlk();
+
+        //绑定角色名称下拉框
+        Bindjsxlk();
+
+    });
+    var pageCount = 0;
+    var rows = 0;
+
+    //查询
+    function fenye(pindex, psize) {
+        $.ajax({
+            type: "post",
+            url: "/XML/fyShow",
+            data: "{pageIndex:" + pindex + ",pagesize:" + psize + "}",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                pageCount = result.PageCount;
+                $("#StaffInfo tr").remove();
+                $.each(result.Datalist, function (index, data) {
+                    $("#StaffInfo").append("<tr><td><input name='chk' type='checkbox'/></td><td>" + data.LoginName + "</td><td>" + data.ygNumber + "</td><td>" + data.ygName + "</td><td>" + data.email + "</td><td>" + data.phone + "</td><td>" + data.LoginNum + "</td><td>" + data.dBmName + "</td><td>" + data.pZwName + "</td><td><a onclick='return ygDel(&quot;" + data.ygNumber + "&quot;)' class='layui-btn layui-btn-primary layui-btn-sm'>删除</a><a class='layui-btn layui-btn-primary layui-btn-sm' data-toggle='modal' data-target='#myUpdate' onclick='return ById(&quot;" + data.ygNumber + "&quot;)'>修改</a></td><tr>");
+
+                });
+            },
+            error: function (ex) {
+                alert("Error" + ex.responseText);
+            }
+        });
+    }
+    //总条数
+    function getrows() {
+        $.ajax({
+            type: "post",
+            url: "/XML/getRow",
+            data: "{}",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                //获取总条数；
+                rows = result;
+                layui.use(['laypage', 'layer'], function () {
+                    var laypage = layui.laypage
+                        , layer = layui.layer;
+
+                    //完整功能版
+                    laypage.render({
+                        elem: 'demo7'
+                        , count: rows
+                        , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+                        , jump: function (obj, frist) {
+                            if (!frist) {
+                                //调用自己分页的方法
+                                fenye(obj.curr, obj.limit);
+                            }
+                        }
+                    });
+                });
+            },
+            error: function (ex) {
+                alert("Error" + ex.responseText);
+            }
+        });
+    }
+
+    //根据用户名或工号进行查询
+    $("#queryByName").click(function () {
+
+        //判断文本框是否为空
+        if ($("#username").val() == "") {
+            fenye(1, 10);
+            return;
+        }
+
+        $.ajax({
+            type: "post",
+            url: "/XML/ShowByName",
+            data: "{pageIndex:" + 1 + ",pagesize:" + 10 + ",userName:'" + $("#username").val() + "',ygNum:'" + $("#username").val() + "'}",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                $("#StaffInfo tr").remove();
+                $.each(result.Datalist, function (index, data) {
+                    $("#StaffInfo").append("<tr><td><input id='Checkbox1' type='checkbox'/></td><td>" + data.LoginName + "</td><td>" + data.ygNumber + "</td><td>" + data.ygName + "</td><td>" + data.email + "</td><td>" + data.phone + "</td><td>" + data.LoginNum + "</td><td>" + data.dBmName + "</td><td>" + data.pZwName + "</td><td><a onclick='return ygDel(&quot;" + data.ygNumber + "&quot;)' class='layui-btn layui-btn-primary layui-btn-sm'>删除</a><a class='layui-btn layui-btn-primary layui-btn-sm' data-toggle='modal' data-target='#myUpdate' onclick='return ById(&quot;" + data.ygNumber + "&quot;)'>修改</a></td><tr>");
+                });
+            },
+            error: function (ex) {
+                alert("Error" + ex.responseText);
+            }
+        });
+    });
+
+    //复选框全选
+    $("#check").click(function () {
+        var cf = $("#check").prop("checked");
+        $("[name=chk]").prop("checked", cf);//prop设置属性值
+    });
+
+    //新增弹出框
+    $("#btnAdd").click(function () {
+        $("#di").show();
+    });
+
+    //关闭新增弹出框
+    $("#close").click(function () {
+        $("#di").hide();
+    });
+
+
+    //新增页面绑定部门名称下拉框
+    function Bindbmxlk() {
+        $.ajax({
+            type: "post",
+            data: "{}",
+            dataType: "json",
+            url: "/XML/BybmName",
+            success: function (result) {
+                $.each(result, function (index, data) {
+                    $("#bm").append("<option value='" + data.BmNum + "'>" + data.BmName + "</option>");
+                });
+            }, error: function (ex) {
+                $("Error" + ex.responseText);
+            }
+        });
+    }
+
+    //新增页面绑定角色名称下拉框
+    function Bindjsxlk() {
+        $.ajax({
+            type: "post",
+            data: "{}",
+            dataType: "json",
+            url: "/XML/ByjsName",
+            success: function (result) {
+                $.each(result, function (index, data) {
+                    $("#js").append("<option value='" + data.ZwNum + "'>" + data.ZwName + "</option>");
+                });
+            }, error: function (ex) {
+                $("Error" + ex.responseText);
+            }
+        });
+    }
+
+    //修改页面绑定部门名称下拉框
+    function Bindxlk(name) {
+        $.ajax({
+            type: "post",
+            data: "{}",
+            dataType: "json",
+            url: "/XML/BybmName",
+            success: function (result) {
+                $.each(result, function (index, data) {
+                    if (data.BmName != name) {
+                        $("#bm_1").append("<option value='" + data.BmNum + "'>" + data.BmName + "</option>");
+                    } else {
+                        $("#bm_1").append("<option value='" + data.BmNum + "' selected>" + data.BmName + "</option>");
+                    }
+                });
+            }, error: function (ex) {
+                $("Error" + ex.responseText);
+            }
+        });
+    }
+
+    //修改页面绑定角色名称下拉框
+    function Bindjs(jsname) {
+        $.ajax({
+            type: "post",
+            data: "{}",
+            dataType: "json",
+            url: "/XML/ByjsName",
+            success: function (result,data) {
+                $.each(result, function (index, data) {
+                    if (data.ZwName != jsname) {
+                        $("#js_1").append("<option value='" + data.ZwNum + "'>" + data.ZwName + "</option>");
+                    } else {
+                        $("#js_1").append("<option value='" + data.ZwNum + "' selected>" + data.ZwName + "</option>");
+                    }
+                });
+            }, error: function (ex) {
+                $("Error" + ex.responseText);
+            }
+        });
+    }
+
+    //新增
+    $("#addInfo").click(function () {
+        $.ajax({
+            type: "POST",//提交方式
+            url: "/XML/ygAdd",//请求的URL路径
+            data: "{sta:{ygNumber:'" + $("#txtygNum").val() + "',LoginName:'" + $("#txtUserName").val() + "',loginPwd:'" + $("#txtpwd").val() + "',ygName:'" + $("#txtygName").val() + "',email:'" + $("#txtEmail").val() + "',phone:'" + $("#txtphone").val() + "',BmNum:'" + $("#bm").val() + "',ZwNum:'" + $("#js").val() + "',LoginNum:'" + 1 + "',isDel:'" + 1 + "'}}",//向服务器传递的参数
+            dataType: "json",//预期服务器返回的数据类型
+            contentType: "application/json",//发送信息至服务器时内容编码类型
+            //请求成功后的回调函数
+            success: function (result) {
+                if (result > 0) {
+                    alert("员工新增成功");
+                    fenye(1, 10);
+                    getrows();
+                } else {
+                    alert("员工新增失败");
+                }
+            },
+            error: function (ex) {
+                alert("Error:" + ex.responseText);
+            }
+        });
+    });
+
+    //单个删除
+    function ygDel(ygNum) {
+        if (confirm('确定删除吗？')) {
+            $.ajax({
+                type: "post",
+                data: "{ygNum:'" + ygNum + "'}",
+                contentType: "application/json",
+                dataType: "json",
+                url: "/XML/ygDel",
+                success: function (result) {
+                    if (result > 0) {
+                        alert("删除成功");
+                        fenye(1, 10);
+                    } else {
+                        alert("删除失败");
+                    }
+                },
+                error: function (res) {
+                    alert(res.responseText);
+                }
+            })
+        }
+    }
+
+    //多个删除
+    function ygDels() {
+        if ($("input[name='chk']:checked").length > 0) {
+            if (confirm('确认删除吗？')) {
+                var count = 0;
+                $("input[name='chk']:checked").each(function () {
+                    var n = $(this).parents("tr").index();
+                    var name = document.getElementById("t_1").getElementsByTagName("tr")[n + 1].getElementsByTagName("td")[2].innerHTML;
+                    $.ajax({
+                        type: "post",
+                        data: "{ygNum:'" + name + "'}",
+                        contentType: "application/json",
+                        dataType: "json",
+                        url: "/XML/ygDel",
+                        success: function (result) {
+                            fenye(1, 10);
+                        },
+                        error: function (res) {
+                            alert(res.responseText);
+                        },
+                    });
+                    count++;
+                });
+                if (count > 0) {
+                    alert("有" + count + "项数据删除成功！");
+                } else {
+                    alert("删除失败！");
+                }
+            }
+        } else {
+            alert("请选中要删除的行");
+        }
+    }
+
+    //修改根据用户编号进行查询
+    function ById(ygNum) {
+        $.ajax({
+            type: "post",
+            url: "/XML/GetById",
+            data: "{ygNum:'" + ygNum + "'}",
+            dataType: "json",
+            contentType: "application/json",
+            success: function (result) {
+                $("#txtygNum_1").val(result[0].ygNumber);
+                $("#txtUserName_1").val(result[0].LoginName);
+                $("#txtpwd_1").val(result[0].loginPwd);
+                $("#txtygName_1").val(result[0].ygName);
+                $("#txtEmail_1").val(result[0].email);
+                $("#txtphone_1").val(result[0].phone);
+                Bindxlk(result[0].dBmName);
+                Bindjs(result[0].pZwName);
+            },
+            error: function (ex) {
+                alert("Error" + ex.responseText);
+            }
+        });
+    }
+
+    //修改
+    function StaffUp() {
+        var ygbh = $("#txtygNum_1").val();
+        var dlname = $("#txtUserName_1").val();
+        var dlmm = $("#txtpwd_1").val();
+        var ygname = $("#txtygName_1").val();
+        var email = $("#txtEmail_1").val();
+        var phone = $("#txtphone_1").val();
+        var bm = $("#bm_1").val();
+        var js = $("#js_1").val();
+        $.ajax({
+            type: "POST",//提交方式
+            url: "/XML/StaUp",//请求的URL路径
+            data: "{sta:{ygNumber:'" + ygbh + "',LoginName:'" + dlname + "',loginPwd:'" + dlmm + "',ygName:'" + ygname + "',email:'" + email + "',phone:'" + phone + "',BmNum:'" + bm + "',ZwNum:'" + js + "'}}",//向服务器传递的参数
+            dataType: "json",//预期服务器返回的数据类型
+            contentType: "application/json",//发送信息至服务器时内容编码类型
+            //请求成功后的回调函数
+            success: function (result) {
+                if (result > 0) {
+                    alert("修改成功");
+                    fenye(1, 10);
+                } else {
+                    alert("修改失败");
+                }
+            },
+            error: function (ex) {
+                alert("Error:" + ex.responseText);
+            }
+        });
+    }
+
+
+</script>
