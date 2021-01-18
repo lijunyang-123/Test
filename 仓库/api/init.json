@@ -143,31 +143,31 @@
           "child": [
             {
               "title": "库存清单",
-              "href": "",
+              "href": "/HLL/Index",
               "icon": "fa fa-list-alt",
               "target": "_self"
             },
             {
               "title": "货品统计",
-              "href": "",
+              "href": "/HLL/Index1",
               "icon": "fa fa-list-alt",
               "target": "_self"
             },
             {
               "title": "出入库报表",
-              "href": "",
+              "href": "/HLL/Index2",
               "icon": "fa fa-list-alt",
               "target": "_self"
             },
             {
               "title": "入库报表",
-              "href": "",
+              "href": "/HLL/Index3",
               "icon": "fa fa-list-alt",
               "target": "_self"
             },
             {
               "title": "出库报表",
-              "href": "",
+              "href": "/HLL/Index4",
               "icon": "fa fa-list-alt",
               "target": "_self"
             },

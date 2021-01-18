@@ -493,11 +493,15 @@
     <Content Include="Views\SZH\KeHu.cshtml" />
     <Content Include="Views\SZH\LeiBie.cshtml" />
     <Content Include="Views\SZH\DanWei.cshtml" />
+    <Content Include="Views\HLL\Index.cshtml" />
+    <Content Include="Views\HLL\Index1.cshtml" />
+    <Content Include="Views\HLL\Index2.cshtml" />
+    <Content Include="Views\HLL\Index3.cshtml" />
+    <Content Include="Views\HLL\Index4.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Views\HLL\" />
     <Folder Include="Views\ZYY\" />
     <Folder Include="仓库\page\table\" />
   </ItemGroup>

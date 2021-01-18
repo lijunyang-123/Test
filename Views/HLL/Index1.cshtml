@@ -1,0 +1,142 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index1</title>
+    <link href="~/Scripts/layui-v2.5.7/layui-v2.5.7/layui/css/layui.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/layui-v2.5.7/layui-v2.5.7/layui/layui.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <blockquote class="layui-elem-quote ">在线库存报表</blockquote>
+    <div class="clearfix margin-bottom-10">
+        <div class="btn-group pull-right">
+            <a class="btn btn-success" href="javascript:void(0)" onclick="StockBillReport.ToExcel()" style="margin:0px 30px 0px 0px;">导出Excel</a>
+        </div>
+    </div>
+    <div class="layui-col-xs11" style="border: 1px solid #DDDDDD; height:80px;margin-left:60px;margin-top:10px;">
+        <div style="padding:20px 0px 0px 100px;">
+            <a style="font-size:18px; color:black;">产品/编号/条码/名称</a> &nbsp;
+            <input id="AA" name="AA" type="text" class="searchinfo" style="width:250px; height:30px;" />&nbsp;&nbsp;
+            &nbsp;&nbsp;
+            <a id="sousuo" class="btn btn-info" style="font-size:15px">
+                <span class=" glyphicon glyphicon-search" href="javascript:void(0)"></span> 搜索
+            </a>
+        </div>
+    </div>
+
+    <div class="layui-col-xs11" style="margin-top:40px;margin-left:60px;">
+        <table class="table table-striped table-bordered table-hover" id="tabInfo">
+            <thead>
+                <tr class="widget-title">
+                    <th class="hidden-480">产品编号</th>
+                    <th class="hidden-480">产品条码</th>
+                    <th class="hidden-480">产品名称</th>
+                    <th class="hidden-480">类别</th>
+                    <th class="hidden-480">预警值下限</th>
+                    <th class="hidden-480">规格</th>
+                    <th class="hidden-480">库存数</th>
+                    <th class="hidden-480">进货总数</th>
+                    <th class="hidden-480">出货总数</th>
+                    <th class="hidden-480">报损总数</th>
+                </tr>
+            </thead>
+            <tbody id="tb1">
+            </tbody>
+        </table>
+        <div id="demo7">
+        </div>
+        <script>
+            $(function () {
+                Page(1, 10);
+                getrows();
+            });
+            var pageCount = 0;
+            var rows = 0;
+            //查询
+            function Page(pindex, psize) {
+                $.ajax({
+                    type: "post",
+                    url: "/HLL/Page1",
+                    data: "{pageIndex:" + pindex + ",pagesize:" + psize + "}",
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: function (result) {
+                        pageCount = result.PageCount;
+                        $("#tb1 tr").remove();
+                        $.each(result.Datalist, function (index, data) {
+                            $("#tb1").append("<tr><td>" + data.productNum + "</td><td>" + data.Probarcode + "</td><td>" + data.productName + "</td><td>" + data.productLeixNum + "</td><td>" + data.productCount + "</td><td>" + data.Specifications + "</td><td>" + data.productCount + "</td><td>" + data.JhCount + "</td><td>" + data.ChCount + "</td><td>" + data.BsCount + "</td><tr>");
+                        });
+                    },
+                    error: function (ex) {
+                        $("Error" + ex.responseText);
+                    }
+                });
+            }
+            //总条数
+            function getrows() {
+                $.ajax({
+                    type: "post",
+                    url: "/HLL/getRow1",
+                    data: "{}",
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: function (result) {
+                        //获取总条数；
+                        rows = result;
+                        layui.use(['laypage', 'layer'], function () {
+                            var laypage = layui.laypage
+                                , layer = layui.layer;
+                            //完整功能版
+                            laypage.render({
+                                elem: 'demo7'
+                                , count: rows
+                                , layout: ['count', 'prev', 'page', 'next', 'limit', 'refresh', 'skip']
+                                , jump: function (obj, frist) {
+                                    if (!frist) {
+                                        //调用自己分页的方法
+                                        Page(obj.curr, obj.limit);
+                                    }
+                                }
+                            });
+                        });
+                    },
+                    error: function (ex) {
+                        $("Error" + ex.responseText);
+                    }
+                });
+            }
+            //根据条件查询
+            $("#sousuo").click(function () {
+                if ($("#AA").val() == "") {
+                    Page(1, 10);
+                    return;
+                }
+                //按条件查询所有信息
+                $.ajax({
+                    type: "post",
+                    url: "/HLL/queryid1",
+                    data: "{pageIndex:" + 1 + ",pagesize:" + 10 + ",productNum:'" + $("#AA").val() + "',Probarcode:'" + $("#AA").val() + "',productName:'" + $("#AA").val() + "'}",
+                    dataType: "json",
+                    contentType: "application/json",
+                    success: function (result) {
+                        $("#tb1 tr").remove();
+                        $.each(result.Datalist, function (index, data) {
+                            $("#tb1").append("<tr><td>" + data.productNum + "</td><td>" + data.Probarcode + "</td><td>" + data.productName + "</td><td>" + data.productLeixNum + "</td><td>" + data.productCount + "</td><td>" + data.Specifications + "</td><td>" + data.productCount + "</td><td>" + data.JhCount + "</td><td>" + data.ChCount + "</td><td>" + data.BsCount + "</td><tr>");
+                        });
+                    }, error: function (ex) {
+                        $("Error" + ex.responseText);
+                    }
+                });
+            });
+        </script>
+    </div>
+</body>
+</html>

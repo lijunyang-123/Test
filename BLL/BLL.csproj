@@ -41,6 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="H\CountManager.cs" />
+    <Compile Include="H\LocationManager.cs" />
+    <Compile Include="H\OutinManager.cs" />
+    <Compile Include="H\OutManager.cs" />
+    <Compile Include="H\PutManager.cs" />
     <Compile Include="L\RuluManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="S\ChanPinBLL.cs" />
@@ -51,7 +56,6 @@
     <Compile Include="S\LeiBieBLL.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="H\" />
     <Folder Include="X\" />
     <Folder Include="Z\" />
   </ItemGroup>
